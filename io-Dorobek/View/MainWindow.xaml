@@ -4,9 +4,118 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:io_Dorobek"
+        xmlns:vm="clr-namespace:io_Dorobek.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Dorobek++" Height="600" Width="1000">
+    
+    <Window.DataContext>
+        <vm:MainViewModel x:Name="vm"/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment"  Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+
         
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0"
+                    x:Name="button1"
+                    Content="Dodaj"/>
+            <!--Command="{Binding Dodaj}"/>-->
+
+            <Button Grid.Row="0" Grid.Column="1"
+                    x:Name="button2"
+                    Content="Zapisz&#xa;jako"/>
+            <!--Command="{Binding Zapisz}"/>-->
+
+            <Button Grid.Row="0" Grid.Column="2"
+                    x:Name="button3"
+                    Content="Eksport&#xa;do Bibtex"/>
+            <!--Command="{Binding EksportBibtex}"-->
+
+            <Button Grid.Row="0" Grid.Column="3"
+                    x:Name="button4"
+                    Content="Usuń"/>
+            <!--Command="{Binding Usuń}"-->
+
+            <TextBox Grid.Row="0" Grid.Column="4"
+                     Margin="10"
+                     Text="Wyszukaj"
+                     FontSize="10"
+                     FontWeight="Normal"
+                     Height="20"
+                     Width="350"
+                     />
+
+            <Image Grid.Row="0" Grid.Column="5" 
+                   Height="30"
+                   HorizontalAlignment="Left"
+                   Source="lupa.png"/>
+
+            <ComboBox Grid.Row="0" Grid.Column="6"
+                      Margin="10"
+                      ItemsSource="{Binding Path=Path_of_combobox}"
+                      />
+            
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                     Text="Tytuł"
+                     />
+            
+            <TextBlock Grid.Row="1" Grid.Column="2"
+                     Text="Autorzy"
+                     />
+            
+            <TextBlock Grid.Row="1" Grid.Column="3"
+                     Text="Data Publikacji"
+                     />
+            <TextBlock Grid.Row="1" Grid.Column="4"
+                     Text="DOI"
+                     />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <ListBox Grid.Row="2"
+                      x:Name="CheckBox"
+                        ItemsSource="{Binding Path=Pozycje}"
+                      />
+        </Grid>
+
     </Grid>
 </Window>

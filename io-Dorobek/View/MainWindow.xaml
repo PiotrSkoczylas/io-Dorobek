@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:io_Dorobek"
         xmlns:vm="clr-namespace:io_Dorobek.ViewModel"
         mc:Ignorable="d"
-        Title="Dorobek++" Height="600" Width="1000">
+        Title="Dorobek++" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen">
     
     <Window.DataContext>
         <vm:MainViewModel x:Name="vm"/>
@@ -15,7 +16,7 @@
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="10"/>
-            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Margin" Value="8"/>
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"/>
@@ -45,6 +46,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="4*"/>
@@ -52,25 +54,34 @@
 
             <Button Grid.Row="0" Grid.Column="0"
                     x:Name="button1"
-                    Content="Dodaj"/>
+                    Content="Dodaj"
+                    Click="Button1_Click"
+                    />
             <!--Command="{Binding Dodaj}"/>-->
 
             <Button Grid.Row="0" Grid.Column="1"
+                    x:Name="button5"
+                    Content="Edytuj/&#xa;/Przeglądaj"
+                    Click="Button5_Click"
+                    />
+            <!--Command="{Binding Edytuj}"/>-->
+
+            <Button Grid.Row="0" Grid.Column="2"
                     x:Name="button2"
                     Content="Zapisz&#xa;jako"/>
             <!--Command="{Binding Zapisz}"/>-->
 
-            <Button Grid.Row="0" Grid.Column="2"
+            <Button Grid.Row="0" Grid.Column="3"
                     x:Name="button3"
                     Content="Eksport&#xa;do Bibtex"/>
             <!--Command="{Binding EksportBibtex}"-->
 
-            <Button Grid.Row="0" Grid.Column="3"
+            <Button Grid.Row="0" Grid.Column="4"
                     x:Name="button4"
                     Content="Usuń"/>
             <!--Command="{Binding Usuń}"-->
 
-            <TextBox Grid.Row="0" Grid.Column="4"
+            <TextBox Grid.Row="0" Grid.Column="5"
                      Margin="10"
                      Text="Wyszukaj"
                      FontSize="10"
@@ -79,12 +90,12 @@
                      Width="350"
                      />
 
-            <Image Grid.Row="0" Grid.Column="5" 
+            <Image Grid.Row="0" Grid.Column="6" 
                    Height="30"
                    HorizontalAlignment="Left"
                    Source="lupa.png"/>
 
-            <ComboBox Grid.Row="0" Grid.Column="6"
+            <ComboBox Grid.Row="0" Grid.Column="7"
                       Margin="10"
                       ItemsSource="{Binding Path=Path_of_combobox}"
                       />

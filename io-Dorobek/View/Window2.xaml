@@ -1,0 +1,128 @@
+﻿<Window x:Class="io_Dorobek.View.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:io_Dorobek.View"
+        xmlns:vm="clr-namespace:io_Dorobek.ViewModel"
+        mc:Ignorable="d"
+        Title="Edytuj pozycję" Height="450" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    
+    <Window.DataContext>
+        <vm:MainViewModel x:Name="vm"/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment"  Value="Center"/>
+            <Setter Property="Padding"  Value="20"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="TextWrapping" Value="Wrap"/> 
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+       
+    </Window.Resources>
+    
+   
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+ 
+        
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Text="Tytuł:"/>
+
+        <TextBox Grid.Row="0" Grid.Column="1"
+                 x:Name="W2_title"
+                 Text="{Binding W2_Title, Mode=TwoWay}"
+                 />
+
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Autorzy:"/>
+
+        <TextBox Grid.Row="1" Grid.Column="1"
+                 x:Name="W2_author"
+                 Text="{Binding W2_Author, Mode=TwoWay}"
+                 />
+
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Text="Data publikacji:"/>
+
+        <TextBox Grid.Row="2" Grid.Column="1"
+                 x:Name="W2_publicationDate"
+                 Text="{Binding W2_PublicationDate, Mode=TwoWay}"
+                 />
+
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="DOI:"
+                   />
+
+        <TextBox Grid.Row="3" Grid.Column="1"
+                 x:Name="W2_DOI"
+                 Text="{Binding W2_DOI_VM, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Text="ISBN dzieła lub dzieła nadrzędnego:"/>
+
+        <TextBox Grid.Row="4" Grid.Column="1"
+                 x:Name="W2_isbnOfPaper"
+                 Text="{Binding W2_IsbnOfPaper, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0"
+                   Text="ISSN dzieła lub dzieła nadrzędnego:"/>
+
+        <TextBox Grid.Row="5" Grid.Column="1"
+                 x:Name="W2_issnOfPaper"
+                 Text="{Binding W2_IssnOfPaper, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0"
+                   Text="Dzieło nadrzędne:"/>
+
+        <TextBox Grid.Row="6" Grid.Column="1"
+                 x:Name="W2_articleName"
+                 Text="{Binding W2_ArticleName, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="7" Grid.Column="0"
+                   Text="Hasła kluczowe/słowa przedmiotowe:"/>
+
+        <TextBox Grid.Row="7" Grid.Column="1"
+                 x:Name="W2_keyWords"
+                 Text="{Binding W2_KeyWords, Mode=TwoWay}"/>
+        
+        <Button Grid.Row="8" Grid.Column="0"
+                    x:Name="W2_button1"
+                    Content="Edytuj"/>
+            <!--Command="{Binding W2_Edytuj}"/>-->
+        
+        <Button Grid.Row="8" Grid.Column="1"
+                    x:Name="W2_button2"
+                    Content="Anuluj"/>
+            <!--Command="{Binding W2_Anuluj}"/>-->
+        
+    </Grid>
+</Window>

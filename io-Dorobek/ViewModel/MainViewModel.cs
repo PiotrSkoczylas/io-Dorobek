@@ -40,5 +40,118 @@ namespace io_Dorobek.ViewModel
 
 
 
+        //Zmienne których dot. binding w plikach xaml
+
+
+        //Lista rzeczy do wyswietlenia w Combobox w okienku głównym aplikacji
+        private List<string> path_of_combobox = new List<string>();
+        public List<string> Path_of_combobox
+        {
+            get { return path_of_combobox; }
+            private set
+            {
+                for (int i = 0; i < value.Count(); i++)
+                { path_of_combobox[i] = value[i]; }
+            }
+        }
+
+
+
+        //Zmienne występujące przy dodawaniu nowej pozycji (pola tekstowe uzupełniane przez aplikację, i potem ewentualnie modyfikowane przez użytkownika)
+        private string wybranaŚcieżka = "";
+        public string WybranaŚcieżka
+        {
+            get { return wybranaŚcieżka; }
+            private set
+            {
+                    wybranaŚcieżka = value;
+            }
+        }
+
+        private string w1_Title = "";
+        public string W1_Title
+        {
+            get { return w1_Title; }
+            private set
+            {
+                w1_Title = value;
+            }
+        }
+
+        private string w1_Author = "";
+        public string W1_Author
+        {
+            get { return w1_Author; }
+            private set
+            {
+                w1_Author = value;
+            }
+        }
+
+        private string w1_PublicationDate = "";
+        public string W1_PublicationDate
+{
+            get { return w1_PublicationDate; }
+            private set
+            {
+                w1_PublicationDate = value;
+            }
+        }
+
+        private string w1_DOI_VM = "";
+        public string W1_DOI_VM
+        {
+            get { return w1_DOI_VM; }
+            private set
+            {
+                w1_DOI_VM = value;
+            }
+        }
+
+        private string w1_IsbnOfPaper = "";
+        public string W1_IsbnOfPaper
+        {
+            get { return w1_IsbnOfPaper; }
+            private set
+            {
+                w1_IsbnOfPaper = value;
+            }
+        }
+
+        private string w1_IssnOfPaper = "";
+        public string W1_IssnOfPaper
+        {
+            get { return w1_IssnOfPaper; }
+            private set
+            {
+                w1_IssnOfPaper = value;
+            }
+        }
+
+        private string w1_ArticleName = "";
+        public string W1_ArticleName
+        {
+            get { return w1_ArticleName; }
+            private set
+            {
+                w1_ArticleName = value;
+            }
+        }
+
+        private string w1_KeyWords = "";
+        public string W1_KeyWords
+        {
+            get { return w1_KeyWords; }
+            private set
+            {
+                w1_KeyWords = value;
+            }
+        }
+
+
+
+
+
+
     }
 }

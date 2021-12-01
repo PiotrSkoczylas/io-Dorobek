@@ -22,7 +22,7 @@ namespace io_Dorobek.DAL.Repozytoria
             }
         }
 
-        public void deleteById(List<uint> Id)
+        public void deleteById(List<int> Id)
         {
             using (var database = new DB())
             {
@@ -38,13 +38,14 @@ namespace io_Dorobek.DAL.Repozytoria
             {
                 database.Publications.Add(new Publication()
                 {
-                    Id = item.Id,
+                    //Id = item.Id,
                     Title = item.Title,
                     Author = item.Author,
                     Year = item.Year,
                     Doi = item.Doi,
                     PdfFile = pdf
                 });
+                database.SaveChanges();
             }
         }
 

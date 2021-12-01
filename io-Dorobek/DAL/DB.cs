@@ -13,19 +13,29 @@ namespace io_Dorobek.DAL
         public DbSet<Publication> Publications { get; set; }
         public DB(DbContextOptions<DB> opt) : base(opt)
         {
-            Database.EnsureCreated();
-            //Database.Migrate();
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
+            //Database.Migrate();
+            //SaveChanges();
+        }
+        public DB() : base()
+        {
+            //Database.EnsureDeleted();
+            Database.EnsureCreated();
+            //Database.Migrate();
             SaveChanges();
         }
-        public DB() : base() { }
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //    => options.UseSqlServer($"Server=localhost;Database=Dorobek;Trusted_Connection=True;");//$"Data Source=baza.db");
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source=baza.db");
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Publication>()
                 .HasKey(x => x.Id);
+            builder.Entity<Publication>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
 
             base.OnModelCreating(builder);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace io_Dorobek.DAL.Encje
     public class Publication
     {
         [Key]
-        public uint Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public int Year { get; set; }

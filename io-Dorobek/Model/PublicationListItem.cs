@@ -29,5 +29,10 @@ namespace io_Dorobek.Model
             Doi = src.Doi;
             Checked = false;
         }
+
+        public void ChangeCheck()
+        {
+            Checked = !Checked;
+        }
     }
 }

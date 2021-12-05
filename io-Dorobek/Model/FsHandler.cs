@@ -10,9 +10,9 @@ using PdfSharp.Pdf.IO;
 
 namespace io_Dorobek.Model
 {
-    public class FsHandler
+    static class FsHandler
     {
-        public PdfDocument FileLoader(string path)
+        static public PdfDocument FileLoader(string path)
         {
             PdfDocument pdfDocument = PdfReader.Open(path);
             if (pdfDocument == null)
@@ -20,17 +20,17 @@ namespace io_Dorobek.Model
             return pdfDocument;
         }
 
-        public void SavePdfFiles(List<uint> idList, string path)
+        static public void SavePdfFiles(List<int> idList, string path)
         {
             var repo = new PublicationRepo();
-            foreach (uint id in idList)
+            foreach (int id in idList)
             {
                 var a = repo.getPdf(id);
                 a.Item1.Save(Path.Combine(path, a.Item2));
             }
         }
 
-        public void SaveToBibtex(List<PublicationListItem> items, string path)//1 plik wyjsciowy dla wielu wpisow - z rozszerzeniem bibtex
+        static public void SaveToBibtex(List<PublicationListItem> items, string path)//1 plik wyjsciowy dla wielu wpisow - z rozszerzeniem bibtex
         {
             var repo = new PublicationRepo();
             string x = "";

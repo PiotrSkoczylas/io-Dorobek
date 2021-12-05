@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:io_Dorobek"
         xmlns:vm="clr-namespace:io_Dorobek.ViewModel"
+        xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Dorobek++" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
@@ -55,35 +56,36 @@
             <Button Grid.Row="0" Grid.Column="0"
                     x:Name="button1"
                     Content="Dodaj"
-                    Click="Button1_Click"
+                    Command="{Binding c_CallAddWindow}"
                     />
-            <!--Command="{Binding Dodaj}"/>-->
 
             <Button Grid.Row="0" Grid.Column="1"
                     x:Name="button5"
                     Content="Edytuj/&#xa;/Przeglądaj"
-                    Click="Button5_Click"
+                    Command="{Binding c_CallEditWindow}"
                     />
-            <!--Command="{Binding Edytuj}"/>-->
 
             <Button Grid.Row="0" Grid.Column="2"
                     x:Name="button2"
-                    Content="Zapisz&#xa;jako"/>
-            <!--Command="{Binding Zapisz}"/>-->
+                    Content="Zapisz&#xa;jako"
+                    Command="{Binding c_SaveFiles}"
+                    />
 
             <Button Grid.Row="0" Grid.Column="3"
                     x:Name="button3"
-                    Content="Eksport&#xa;do Bibtex"/>
-            <!--Command="{Binding EksportBibtex}"-->
+                    Content="Eksport&#xa;do Bibtex"
+                    Command="{Binding c_SaveBibtex}"
+                />
 
             <Button Grid.Row="0" Grid.Column="4"
                     x:Name="button4"
-                    Content="Usuń"/>
-            <!--Command="{Binding Usuń}"-->
+                    Content="Usuń"
+                    Command="{Binding c_DeleteItems}"
+                    />
 
             <TextBox Grid.Row="0" Grid.Column="5"
                      Margin="10"
-                     Text="Wyszukaj"
+                     Text="{Binding p_searchBar}"
                      FontSize="10"
                      FontWeight="Normal"
                      Height="20"
@@ -105,7 +107,7 @@
         <Grid Grid.Row="1">
             
             
-            <DataGrid x:Name="DataGrid"  ItemsSource="{Binding Pozycje}"  AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="True">
+            <DataGrid x:Name="ItemGrid"  ItemsSource="{Binding Pozycje}" SelectionMode="Extended" AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="True">
                 
                 <DataGrid.Columns>
 
@@ -120,9 +122,14 @@
                                     Binding="{Binding Year}"/>
                 <DataGridTextColumn Header="DOI" 
                                     Width="4*"
-                                    Binding="{Binding DOI}"/>
+                                    Binding="{Binding Doi}"/>
 
                 </DataGrid.Columns>
+                <interactivity:Interaction.Triggers>
+                    <interactivity:EventTrigger EventName="SelectionChanged">
+                        <interactivity:InvokeCommandAction Command="{Binding c_SelectionChanged}" CommandParameter="{Binding ElementName=ItemGrid, Path=SelectedItems}"/>
+                    </interactivity:EventTrigger>
+                </interactivity:Interaction.Triggers>
             </DataGrid>
             
         </Grid>

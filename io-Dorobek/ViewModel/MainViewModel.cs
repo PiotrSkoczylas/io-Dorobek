@@ -68,6 +68,80 @@ namespace io_Dorobek.ViewModel
             }
         }
 
+        #region W1 commands
+        private ICommand AddPublicationToDb;
+        public ICommand c_AddPublicationToDb
+        {
+            get
+            {
+                return AddPublicationToDb ?? (AddPublicationToDb = new RelayCommand(
+                    (p) =>
+                    {
+                        try
+                        {
+                            PdfDocument doc = FsHandler.FileLoader(WybranaŚcieżka);
+                            if(doc!= null)
+                            {
+                                PublicationListItem item = new PublicationListItem()
+                                {
+                                    Title = W1_Title,
+                                    Author = W1_Author,
+                                    Doi = W1_DOI_VM,
+                                    Year = 1900//W1_PublicationDate <<<<-----------------------------To change later
+                                };
+                                listHandler.AddElement(doc, item);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            System.Windows.MessageBox.Show(ex.Message);
+                        }
+                    },
+                    p => true)
+                    );
+            }
+        }
+
+        private ICommand FileChosen;
+        public ICommand c_FileChosen
+        {
+            get
+            {
+                return FileChosen ?? (FileChosen = new RelayCommand(
+                    (p) =>
+                    {
+                        //Call FileContentParser here and fill form data with the result
+                    },
+                    p => true)
+                    );
+            }
+        }
+
+        private ICommand BrowseForPdf;
+        public ICommand c_BrowseForPdf
+        {
+            get
+            {
+                return BrowseForPdf ?? (BrowseForPdf = new RelayCommand(
+                    (p) =>
+                    {
+                        using (var x = new OpenFileDialog())
+                        {
+                            x.Filter = "pdf file (*.pdf)|*.pdf";
+                            x.Title = "Select pdf file";
+                            if(x.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(x.FileName))
+                            {
+                                WybranaŚcieżka = x.FileName;
+                            }
+                        }
+                    },
+                    p => true)
+                    );
+            }
+        }
+
+
+        #endregion
 
         #region Proporties for Window1
         //Zmienne występujące przy dodawaniu nowej pozycji (pola tekstowe uzupełniane przez aplikację, i potem ewentualnie modyfikowane przez użytkownika)
@@ -78,6 +152,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                     wybranaŚcieżka = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WybranaŚcieżka)));
             }
         }
 
@@ -88,6 +163,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_Title = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_Title)));
             }
         }
 
@@ -98,6 +174,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_Author = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_Author)));
             }
         }
 
@@ -108,6 +185,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_PublicationDate = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_PublicationDate)));
             }
         }
 
@@ -118,6 +196,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_DOI_VM = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_DOI_VM)));
             }
         }
 
@@ -128,6 +207,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_IsbnOfPaper = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_IsbnOfPaper)));
             }
         }
 
@@ -138,6 +218,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_IssnOfPaper = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_IssnOfPaper)));
             }
         }
 
@@ -148,6 +229,7 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_ArticleName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_ArticleName)));
             }
         }
 
@@ -158,12 +240,12 @@ namespace io_Dorobek.ViewModel
             private set
             {
                 w1_KeyWords = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_KeyWords)));
             }
         }
         #endregion
 
         #region Commands
-
 
         private ICommand SelectionChanged;
         public ICommand c_SelectionChanged
@@ -222,7 +304,7 @@ namespace io_Dorobek.ViewModel
                             {
                                 FsHandler.SavePdfFiles(
                                     Pozycje.Where(z => z.Checked).Select(a => a.Id).ToList(), 
-                                    path.ToString());
+                                    x.SelectedPath);
                             }
                         }
                     },
@@ -241,17 +323,11 @@ namespace io_Dorobek.ViewModel
                     {
                         using(SaveFileDialog x = new SaveFileDialog())
                         {
-                            x.Filter = "bibtex file (*.bibtex)|*.bibtex"; 
+                            x.Filter = "bibtex file (*.bibtex)|*.bibtex";
                             if (x.ShowDialog() == DialogResult.OK)
                             {
-                                Stream outStream;
-                                if ((outStream = x.OpenFile()) != null)
-                                {
-                                    // Code to write the stream goes here.
-                                    outStream.Close();
-                                }
+                                FsHandler.SaveToBibtex(Pozycje.Where(a => a.Checked).ToList(), x.FileName);
                             }
-                            //FsHandler.SaveToBibtex(Pozycje.Where(x => x.Checked).ToList(), path);
                         }
                     },
                     p => true)
@@ -305,21 +381,6 @@ namespace io_Dorobek.ViewModel
                     );
             }
         }
-
-        //private ICommand ChangeSelectionOnItem;
-        //public ICommand c_ChangeSelectionOnItem
-        //{
-        //    get
-        //    {
-        //        return ChangeSelectionOnItem ?? (ChangeSelectionOnItem = new RelayCommand(
-        //            (p) =>
-        //            {
-
-        //            },
-        //            p => true)
-        //            );
-        //    }
-        //}
 
 
         #endregion

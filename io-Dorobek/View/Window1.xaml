@@ -53,11 +53,12 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Button Grid.Row="0" Grid.Column="0"
                     x:Name="W1_button1"
-                    Content="Przeglądaj"/>
-            <!--Command="{Binding Przeglądaj}"/>-->
+                    Content="Przeglądaj"
+                    Command="{Binding c_BrowseForPdf}"
+                />
 
         <TextBlock Grid.Row="0" Grid.Column="1"
                    Text="{Binding WybranaŚcieżka}"
@@ -124,12 +125,12 @@
         <TextBox Grid.Row="8" Grid.Column="1"
                  x:Name="W1_keyWords"
                  Text="{Binding W1_KeyWords, Mode=OneWay}"/>
-        
+
         <Button Grid.Row="9" Grid.Column="0"
                     x:Name="W1_button2"
-                    Content="Dodaj"/>
-            <!--Command="{Binding W1_Dodaj}"/>-->
-        
+                    Content="Dodaj"
+                    Command="{Binding c_AddPublicationToDb}"/>
+
         <Button Grid.Row="9" Grid.Column="1"
                     x:Name="W1_button3"
                     Content="Anuluj"/>

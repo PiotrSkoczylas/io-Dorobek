@@ -36,7 +36,10 @@ namespace io_Dorobek.Model
             string x = "";
             foreach(var item in items)
             {
-                x = $"{x}, @misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
+                if(x.Length > 0)
+                    x = $"{x},\n@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
+                else
+                    x = $"@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}";
             }
             File.WriteAllText(path, x);
         }

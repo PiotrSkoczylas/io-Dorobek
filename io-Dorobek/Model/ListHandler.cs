@@ -58,7 +58,7 @@ namespace io_Dorobek.Model
             var repo = new PublicationRepo();
             using (var x = new MemoryStream())
             {
-               // pdf.Save(x);
+                pdf.Save(x);
                 repo.addPublication(x.ToArray(), item);
             }
             Update();

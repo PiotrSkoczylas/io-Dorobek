@@ -29,6 +29,7 @@ namespace io_Dorobek.DAL.Repozytoria
                 var items = database.Publications.Where(x => Id.Contains(x.Id)).ToList();
                 foreach(var item in items)
                     database.Publications.Remove(item);
+                database.SaveChanges();
             }
         }
 
@@ -49,7 +50,7 @@ namespace io_Dorobek.DAL.Repozytoria
             }
         }
 
-        public (PdfDocument,string) getPdf(uint Id) //rozwazyc liste w wyniku -> zasypywanie bazy zapytaniami przy zapisie wielu -> modyfikacja w fshandlerze
+        public (PdfDocument,string) getPdf(int Id) //rozwazyc liste w wyniku -> zasypywanie bazy zapytaniami przy zapisie wielu -> modyfikacja w fshandlerze
         {
             using (var database = new DB())
             {
@@ -57,10 +58,27 @@ namespace io_Dorobek.DAL.Repozytoria
                 if(null != item)
                 {
                     MemoryStream stream = new MemoryStream(item.PdfFile);
-                    PdfDocument document = PdfReader.Open(stream, PdfDocumentOpenMode.Import);
+                    PdfDocument document = PdfReader.Open(stream);
                     return (document,$"{item.Author.ToUpper()}_{item.Title.ToUpper()}.pdf");//sprawdzic poprawnosc formatowania - czy zgodna z trescia zadania
                 }
                 throw new Exception("Nie udało się pobrać pliku z bazy danych.");
+            }
+        }
+
+        public void EditItem(PublicationListItem item)
+        {
+            using (var database = new DB())
+            {
+                var selected = database.Publications.Where(x=>x.Id==item.Id).FirstOrDefault();
+                if (selected != null)
+                {
+                    selected.Title = item.Title;
+                    selected.Author = item.Author;
+                    selected.Doi = item.Doi;
+                    selected.Year = item.Year;
+                    database.Publications.Update(selected);
+                    database.SaveChanges();
+                }
             }
         }
     }

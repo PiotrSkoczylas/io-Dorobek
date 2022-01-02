@@ -10,9 +10,9 @@ using PdfSharp.Pdf.IO;
 
 namespace io_Dorobek.Model
 {
-    public class FsHandler
+    static class FsHandler
     {
-        public PdfDocument FileLoader(string path)
+        static public PdfDocument FileLoader(string path)
         {
             PdfDocument pdfDocument = PdfReader.Open(path);
             if (pdfDocument == null)
@@ -20,23 +20,26 @@ namespace io_Dorobek.Model
             return pdfDocument;
         }
 
-        public void SavePdfFiles(List<uint> idList, string path)
+        static public void SavePdfFiles(List<int> idList, string path)
         {
             var repo = new PublicationRepo();
-            foreach (uint id in idList)
+            foreach (int id in idList)
             {
                 var a = repo.getPdf(id);
-                a.Item1.Save(Path.Combine(path, a.Item2));
+                a.Item1.Save(Path.Combine(path, string.Concat(a.Item2.Split(Path.GetInvalidFileNameChars()))));
             }
         }
 
-        public void SaveToBibtex(List<PublicationListItem> items, string path)//1 plik wyjsciowy dla wielu wpisow - z rozszerzeniem bibtex
+        static public void SaveToBibtex(List<PublicationListItem> items, string path)
         {
             var repo = new PublicationRepo();
             string x = "";
             foreach(var item in items)
             {
-                x = $"{x}, @misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
+                if(x.Length > 0)
+                    x = $"{x},\n@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
+                else
+                    x = $"@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}";
             }
             File.WriteAllText(path, x);
         }

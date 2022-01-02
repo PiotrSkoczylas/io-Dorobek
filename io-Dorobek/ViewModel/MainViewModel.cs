@@ -1,46 +1,42 @@
-﻿using System;
+﻿using io_Dorobek.DAL.Repozytoria;
+using io_Dorobek.Model;
+using io_Dorobek.View;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace io_Dorobek.ViewModel
 {
 
-    class MainViewModel
+    class MainViewModel : INotifyPropertyChanged
     {
-        private List<Publication> pozycje = new List<Publication>();
-        public List<Publication> Pozycje
+        private ListHandler listHandler { get; set; }
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string name)
         {
-            get { return pozycje; }
-            private set
+            if (PropertyChanged != null)
             {
-                for (int i = 0; i < value.Count(); i++)
-                { pozycje[i] = value[i]; }
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-
-
-        public class Publication
-        {
-            public string Title { get; set; }
-            public string Author { get; set; }
-            public uint Year { get; set; }
-            public string DOI { get; set; }
-        }
-
-
+        #endregion
         public MainViewModel()
         {
-            //Poniższe dane jeszcze do zmiany! Wpisane częściowo na podstawie fizycznych książek, a nie prac naukowych w formacie pdf
-            Pozycje.Add(new Publication() {Title = "Jakiś tytuł", Author = "Jakiś autor", Year = 1492, DOI = "123456789"});
-            Pozycje.Add(new Publication() {Title = "Rachunek różniczkowy\n i całkowy", Author = "G. M. Fichtenholz", Year = 1994, DOI = "-"});
-            Pozycje.Add(new Publication() {Title = "Matematyka\n dla studentów wyższych uczelni technicznych", Author = "Radosław Grzymkowski", Year = 2009, DOI = "-"});
+            listHandler = new ListHandler();
+            Pozycje = listHandler.publications;
         }
-
-
-
-        //Zmienne których dot. binding w plikach xaml
 
 
         //Lista rzeczy do wyswietlenia w Combobox w okienku głównym aplikacji
@@ -55,103 +51,142 @@ namespace io_Dorobek.ViewModel
             }
         }
 
+        #region Commands
 
-
-        //Zmienne występujące przy dodawaniu nowej pozycji (pola tekstowe uzupełniane przez aplikację, i potem ewentualnie modyfikowane przez użytkownika)
-        private string wybranaŚcieżka = "";
-        public string WybranaŚcieżka
+        private ICommand DeleteItems;
+        public ICommand c_DeleteItems
         {
-            get { return wybranaŚcieżka; }
-            private set
+            get
             {
-                    wybranaŚcieżka = value;
+                return DeleteItems ?? (DeleteItems = new RelayCommand(
+                    (p) =>
+                    {
+                        System.Collections.IList items = (System.Collections.IList)p;
+                        var collection = items.Cast<PublicationListItem>().ToList();
+                        listHandler.RemoveElements(
+                            collection
+                            );
+                    },
+                    p => true)
+                    );
             }
         }
 
-        private string w1_Title = "";
-        public string W1_Title
+        private ICommand SaveFiles;
+        public ICommand c_SaveFiles
         {
-            get { return w1_Title; }
-            private set
+            get
             {
-                w1_Title = value;
+                return SaveFiles ?? (SaveFiles = new RelayCommand(
+                    (p) =>
+                    {
+                        using (FolderBrowserDialog x = new FolderBrowserDialog())
+                        {
+                            var path = x.ShowDialog();
+                            if (path == DialogResult.OK && !string.IsNullOrWhiteSpace(x.SelectedPath))
+                            {
+                                System.Collections.IList items = (System.Collections.IList)p;
+                                var collection = items.Cast<PublicationListItem>().Select(a => a.Id).ToList();
+                                FsHandler.SavePdfFiles(
+                                    collection,
+                                    x.SelectedPath);
+                            }
+                        }
+                    },
+                    p => true)
+                    );
             }
         }
 
-        private string w1_Author = "";
-        public string W1_Author
+        private ICommand SaveBibtex;
+        public ICommand c_SaveBibtex
         {
-            get { return w1_Author; }
-            private set
+            get
             {
-                w1_Author = value;
+                return SaveBibtex ?? (SaveBibtex = new RelayCommand(
+                    (p) =>
+                    {
+                        using(SaveFileDialog x = new SaveFileDialog())
+                        {
+                            x.Filter = "bibtex file (*.bibtex)|*.bibtex";
+                            if (x.ShowDialog() == DialogResult.OK)
+                            {
+                                System.Collections.IList items = (System.Collections.IList)p;
+                                var collection = items.Cast<PublicationListItem>().ToList();
+                                FsHandler.SaveToBibtex(collection, x.FileName);
+                            }
+                        }
+                    },
+                    p => true)
+                    );
             }
         }
-
-        private string w1_PublicationDate = "";
-        public string W1_PublicationDate
-{
-            get { return w1_PublicationDate; }
-            private set
-            {
-                w1_PublicationDate = value;
-            }
-        }
-
-        private string w1_DOI_VM = "";
-        public string W1_DOI_VM
+        private ICommand CallAddWindow;
+        public ICommand c_CallAddWindow
         {
-            get { return w1_DOI_VM; }
-            private set
+            get
             {
-                w1_DOI_VM = value;
+                return CallAddWindow ?? (CallAddWindow = new RelayCommand(
+                    (p) =>
+                    {
+                        var viewModel = new AddPublicationViewModel(listHandler);
+                        var window = new AddPublicationView { DataContext = viewModel };
+                        window.Show();
+                    },
+                    p => true)
+                    );
             }
         }
 
-        private string w1_IsbnOfPaper = "";
-        public string W1_IsbnOfPaper
+        private ICommand CallEditWindow;
+        public ICommand c_CallEditWindow
         {
-            get { return w1_IsbnOfPaper; }
-            private set
+            get
             {
-                w1_IsbnOfPaper = value;
+                return CallEditWindow ?? (CallEditWindow = new RelayCommand(
+                    (p) =>
+                    {
+                        System.Collections.IList items = (System.Collections.IList)p;
+                        var collection = items.Cast<PublicationListItem>().ToList();
+                        if(collection.Count == 1)
+                        {
+                            var viewModel = new EditPublicationViewModel(listHandler,collection.First());
+                            var window = new EditPublicationView { DataContext = viewModel };
+                            window.Show();
+                        }
+                    },
+                    p => true)
+                    );
             }
         }
 
-        private string w1_IssnOfPaper = "";
-        public string W1_IssnOfPaper
+        #endregion
+
+        #region Properties
+
+        private ObservableCollection<PublicationListItem> pozycje;
+        public ObservableCollection<PublicationListItem> Pozycje
         {
-            get { return w1_IssnOfPaper; }
+            get { return pozycje; }
             private set
             {
-                w1_IssnOfPaper = value;
+                pozycje = value;
             }
         }
 
-        private string w1_ArticleName = "";
-        public string W1_ArticleName
+        private string searchBar;
+        public string p_searchBar
         {
-            get { return w1_ArticleName; }
-            private set
+            get { return searchBar; }
+            set
             {
-                w1_ArticleName = value;
+                searchBar = value;
+                listHandler.Filter(searchBar);//tymczasowo tutaj
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(p_searchBar)));
             }
         }
 
-        private string w1_KeyWords = "";
-        public string W1_KeyWords
-        {
-            get { return w1_KeyWords; }
-            private set
-            {
-                w1_KeyWords = value;
-            }
-        }
-
-
-
-
-
+        #endregion
 
     }
 }

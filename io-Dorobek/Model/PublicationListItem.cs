@@ -10,16 +10,12 @@ namespace io_Dorobek.Model
     public class PublicationListItem
     {
         public int Id { get; set; }
-        public bool Checked { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public int Year { get; set; }
         public string Doi { get; set; }
 
-        public PublicationListItem()
-        {
-            Checked = false;
-        }
+        public PublicationListItem() {}
         public PublicationListItem(Publication src)
         {
             Id = src.Id;
@@ -27,7 +23,6 @@ namespace io_Dorobek.Model
             Author = src.Author;
             Year = src.Year;
             Doi = src.Doi;
-            Checked = false;
         }
     }
 }

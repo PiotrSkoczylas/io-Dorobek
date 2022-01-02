@@ -28,22 +28,5 @@ namespace io_Dorobek
         {
             InitializeComponent();
         }
-
-
-        //Na potrzeby testów
-        private void Button1_Click(object sender, RoutedEventArgs e)
-        {
-            //Window window = new Window(Window1);
-            Window1 x = new Window1();
-            x.Show();
-            this.Close();
-        }
-
-        private void Button5_Click(object sender, RoutedEventArgs e)
-        {
-            Window2 x = new Window2();
-            x.Show();
-            this.Close();
-        }
     }
 }

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace io_Dorobek.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy Window1.xaml
+    /// Logika interakcji dla klasy Window2.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class EditPublicationView : Window
     {
-        public Window1()
+        public EditPublicationView()
         {
             InitializeComponent();
         }

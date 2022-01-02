@@ -58,7 +58,7 @@ namespace io_Dorobek.DAL.Repozytoria
                 if(null != item)
                 {
                     MemoryStream stream = new MemoryStream(item.PdfFile);
-                    PdfDocument document = PdfReader.Open(stream, PdfDocumentOpenMode.Import);
+                    PdfDocument document = PdfReader.Open(stream);
                     return (document,$"{item.Author.ToUpper()}_{item.Title.ToUpper()}.pdf");//sprawdzic poprawnosc formatowania - czy zgodna z trescia zadania
                 }
                 throw new Exception("Nie udało się pobrać pliku z bazy danych.");

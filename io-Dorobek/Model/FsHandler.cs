@@ -26,11 +26,11 @@ namespace io_Dorobek.Model
             foreach (int id in idList)
             {
                 var a = repo.getPdf(id);
-                a.Item1.Save(Path.Combine(path, a.Item2));
+                a.Item1.Save(Path.Combine(path, string.Concat(a.Item2.Split(Path.GetInvalidFileNameChars()))));
             }
         }
 
-        static public void SaveToBibtex(List<PublicationListItem> items, string path)//1 plik wyjsciowy dla wielu wpisow - z rozszerzeniem bibtex
+        static public void SaveToBibtex(List<PublicationListItem> items, string path)
         {
             var repo = new PublicationRepo();
             string x = "";

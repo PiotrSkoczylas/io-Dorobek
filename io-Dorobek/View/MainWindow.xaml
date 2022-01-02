@@ -63,29 +63,33 @@
                     x:Name="button5"
                     Content="Edytuj/&#xa;/Przeglądaj"
                     Command="{Binding c_CallEditWindow}"
+                    CommandParameter="{Binding ElementName=ItemGrid, Path=SelectedItems}"
                     />
 
             <Button Grid.Row="0" Grid.Column="2"
                     x:Name="button2"
                     Content="Zapisz&#xa;jako"
                     Command="{Binding c_SaveFiles}"
+                    CommandParameter="{Binding ElementName=ItemGrid, Path=SelectedItems}"
                     />
 
             <Button Grid.Row="0" Grid.Column="3"
                     x:Name="button3"
                     Content="Eksport&#xa;do Bibtex"
                     Command="{Binding c_SaveBibtex}"
+                    CommandParameter="{Binding ElementName=ItemGrid, Path=SelectedItems}"
                 />
 
             <Button Grid.Row="0" Grid.Column="4"
                     x:Name="button4"
                     Content="Usuń"
                     Command="{Binding c_DeleteItems}"
+                    CommandParameter="{Binding ElementName=ItemGrid, Path=SelectedItems}"
                     />
 
             <TextBox Grid.Row="0" Grid.Column="5"
                      Margin="10"
-                     Text="{Binding p_searchBar}"
+                     Text="{Binding p_searchBar, UpdateSourceTrigger=PropertyChanged}"
                      FontSize="10"
                      FontWeight="Normal"
                      Height="20"
@@ -105,12 +109,10 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            
-            
-            <DataGrid x:Name="ItemGrid"  ItemsSource="{Binding Pozycje}" SelectionMode="Extended" AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="True">
-                
-                <DataGrid.Columns>
 
+
+            <DataGrid x:Name="ItemGrid"  ItemsSource="{Binding Pozycje}" SelectionMode="Extended" AutoGenerateColumns="False" CanUserAddRows="false" IsReadOnly="True">
+                <DataGrid.Columns>
                 <DataGridTextColumn Header="Tytuł"
                                     Width="14*"                   
                                     Binding="{Binding Title}" />
@@ -125,11 +127,6 @@
                                     Binding="{Binding Doi}"/>
 
                 </DataGrid.Columns>
-                <interactivity:Interaction.Triggers>
-                    <interactivity:EventTrigger EventName="SelectionChanged">
-                        <interactivity:InvokeCommandAction Command="{Binding c_SelectionChanged}" CommandParameter="{Binding ElementName=ItemGrid, Path=SelectedItems}"/>
-                    </interactivity:EventTrigger>
-                </interactivity:Interaction.Triggers>
             </DataGrid>
             
         </Grid>

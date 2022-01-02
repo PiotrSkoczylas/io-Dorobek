@@ -19,41 +19,24 @@ namespace io_Dorobek.ViewModel
 
     class MainViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<PublicationListItem> pozycje;
-        public ObservableCollection<PublicationListItem> Pozycje
-        {
-            get { return pozycje; }
-            private set 
-            { 
-                pozycje = value;
-            }
-        }
+        private ListHandler listHandler { get; set; }
 
+        #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string name)
         {
-            if(PropertyChanged != null)
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        private ListHandler listHandler { get; set; }
+        #endregion
         public MainViewModel()
         {
             listHandler = new ListHandler();
             Pozycje = listHandler.publications;
-
-            //TestAddItem();
-            //UpdateList();
-            //Poniższe dane jeszcze do zmiany! Wpisane częściowo na podstawie fizycznych książek, a nie prac naukowych w formacie pdf
-            //Pozycje.Add(new Publication() {Title = "Jakiś tytuł", Author = "Jakiś autor", Year = 1492, DOI = "123456789"});
-            //Pozycje.Add(new Publication() {Title = "Rachunek różniczkowy\n i całkowy", Author = "G. M. Fichtenholz", Year = 1994, DOI = "-"});
-            //Pozycje.Add(new Publication() {Title = "Matematyka\n dla studentów wyższych uczelni technicznych", Author = "Radosław Grzymkowski", Year = 2009, DOI = "-"});
         }
-
-        //Zmienne których dot. binding w plikach xaml
 
 
         //Lista rzeczy do wyswietlenia w Combobox w okienku głównym aplikacji
@@ -68,209 +51,7 @@ namespace io_Dorobek.ViewModel
             }
         }
 
-        #region W1 commands
-        private ICommand AddPublicationToDb;
-        public ICommand c_AddPublicationToDb
-        {
-            get
-            {
-                return AddPublicationToDb ?? (AddPublicationToDb = new RelayCommand(
-                    (p) =>
-                    {
-                        try
-                        {
-                            PdfDocument doc = FsHandler.FileLoader(WybranaŚcieżka);
-                            if(doc!= null)
-                            {
-                                PublicationListItem item = new PublicationListItem()
-                                {
-                                    Title = W1_Title,
-                                    Author = W1_Author,
-                                    Doi = W1_DOI_VM,
-                                    Year = 1900//W1_PublicationDate <<<<-----------------------------To change later
-                                };
-                                listHandler.AddElement(doc, item);
-                            }
-                        }
-                        catch(Exception ex)
-                        {
-                            System.Windows.MessageBox.Show(ex.Message);
-                        }
-                    },
-                    p => true)
-                    );
-            }
-        }
-
-        private ICommand FileChosen;
-        public ICommand c_FileChosen
-        {
-            get
-            {
-                return FileChosen ?? (FileChosen = new RelayCommand(
-                    (p) =>
-                    {
-                        //Call FileContentParser here and fill form data with the result
-                    },
-                    p => true)
-                    );
-            }
-        }
-
-        private ICommand BrowseForPdf;
-        public ICommand c_BrowseForPdf
-        {
-            get
-            {
-                return BrowseForPdf ?? (BrowseForPdf = new RelayCommand(
-                    (p) =>
-                    {
-                        using (var x = new OpenFileDialog())
-                        {
-                            x.Filter = "pdf file (*.pdf)|*.pdf";
-                            x.Title = "Select pdf file";
-                            if(x.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(x.FileName))
-                            {
-                                WybranaŚcieżka = x.FileName;
-                            }
-                        }
-                    },
-                    p => true)
-                    );
-            }
-        }
-
-
-        #endregion
-
-        #region Proporties for Window1
-        //Zmienne występujące przy dodawaniu nowej pozycji (pola tekstowe uzupełniane przez aplikację, i potem ewentualnie modyfikowane przez użytkownika)
-        private string wybranaŚcieżka = "";
-        public string WybranaŚcieżka
-        {
-            get { return wybranaŚcieżka; }
-            private set
-            {
-                    wybranaŚcieżka = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WybranaŚcieżka)));
-            }
-        }
-
-        private string w1_Title = "";
-        public string W1_Title
-        {
-            get { return w1_Title; }
-            private set
-            {
-                w1_Title = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_Title)));
-            }
-        }
-
-        private string w1_Author = "";
-        public string W1_Author
-        {
-            get { return w1_Author; }
-            private set
-            {
-                w1_Author = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_Author)));
-            }
-        }
-
-        private string w1_PublicationDate = "";
-        public string W1_PublicationDate
-{
-            get { return w1_PublicationDate; }
-            private set
-            {
-                w1_PublicationDate = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_PublicationDate)));
-            }
-        }
-
-        private string w1_DOI_VM = "";
-        public string W1_DOI_VM
-        {
-            get { return w1_DOI_VM; }
-            private set
-            {
-                w1_DOI_VM = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_DOI_VM)));
-            }
-        }
-
-        private string w1_IsbnOfPaper = "";
-        public string W1_IsbnOfPaper
-        {
-            get { return w1_IsbnOfPaper; }
-            private set
-            {
-                w1_IsbnOfPaper = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_IsbnOfPaper)));
-            }
-        }
-
-        private string w1_IssnOfPaper = "";
-        public string W1_IssnOfPaper
-        {
-            get { return w1_IssnOfPaper; }
-            private set
-            {
-                w1_IssnOfPaper = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_IssnOfPaper)));
-            }
-        }
-
-        private string w1_ArticleName = "";
-        public string W1_ArticleName
-        {
-            get { return w1_ArticleName; }
-            private set
-            {
-                w1_ArticleName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_ArticleName)));
-            }
-        }
-
-        private string w1_KeyWords = "";
-        public string W1_KeyWords
-        {
-            get { return w1_KeyWords; }
-            private set
-            {
-                w1_KeyWords = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_KeyWords)));
-            }
-        }
-        #endregion
-
         #region Commands
-
-        private ICommand SelectionChanged;
-        public ICommand c_SelectionChanged
-        {
-            get
-            {
-                return SelectionChanged ?? (SelectionChanged = new RelayCommand(
-                    (p) =>
-                    {
-                        System.Collections.IList items = (System.Collections.IList)p;
-                        var collection = items.Cast<PublicationListItem>();
-                        foreach(var item in collection)
-                        {
-                            var xa = Pozycje.Where(x => x.Id == item.Id).FirstOrDefault();
-                            if (xa != null)
-                            {
-                                xa.ChangeCheck();
-                            }
-                        }
-                    },
-                    p => true)
-                    );
-            }
-        }
-
 
         private ICommand DeleteItems;
         public ICommand c_DeleteItems
@@ -280,8 +61,10 @@ namespace io_Dorobek.ViewModel
                 return DeleteItems ?? (DeleteItems = new RelayCommand(
                     (p) =>
                     {
+                        System.Collections.IList items = (System.Collections.IList)p;
+                        var collection = items.Cast<PublicationListItem>().ToList();
                         listHandler.RemoveElements(
-                            Pozycje.Where(x => x.Checked).ToList()
+                            collection
                             );
                     },
                     p => true)
@@ -302,8 +85,10 @@ namespace io_Dorobek.ViewModel
                             var path = x.ShowDialog();
                             if (path == DialogResult.OK && !string.IsNullOrWhiteSpace(x.SelectedPath))
                             {
+                                System.Collections.IList items = (System.Collections.IList)p;
+                                var collection = items.Cast<PublicationListItem>().Select(a => a.Id).ToList();
                                 FsHandler.SavePdfFiles(
-                                    Pozycje.Where(z => z.Checked).Select(a => a.Id).ToList(), 
+                                    collection,
                                     x.SelectedPath);
                             }
                         }
@@ -326,7 +111,9 @@ namespace io_Dorobek.ViewModel
                             x.Filter = "bibtex file (*.bibtex)|*.bibtex";
                             if (x.ShowDialog() == DialogResult.OK)
                             {
-                                FsHandler.SaveToBibtex(Pozycje.Where(a => a.Checked).ToList(), x.FileName);
+                                System.Collections.IList items = (System.Collections.IList)p;
+                                var collection = items.Cast<PublicationListItem>().ToList();
+                                FsHandler.SaveToBibtex(collection, x.FileName);
                             }
                         }
                     },
@@ -334,7 +121,6 @@ namespace io_Dorobek.ViewModel
                     );
             }
         }
-
         private ICommand CallAddWindow;
         public ICommand c_CallAddWindow
         {
@@ -343,7 +129,8 @@ namespace io_Dorobek.ViewModel
                 return CallAddWindow ?? (CallAddWindow = new RelayCommand(
                     (p) =>
                     {
-                        var window = new Window1();
+                        var viewModel = new AddPublicationViewModel(listHandler);
+                        var window = new AddPublicationView { DataContext = viewModel };
                         window.Show();
                     },
                     p => true)
@@ -359,33 +146,33 @@ namespace io_Dorobek.ViewModel
                 return CallEditWindow ?? (CallEditWindow = new RelayCommand(
                     (p) =>
                     {
-                        var window = new Window2();
-                        window.Show();
+                        System.Collections.IList items = (System.Collections.IList)p;
+                        var collection = items.Cast<PublicationListItem>().ToList();
+                        if(collection.Count == 1)
+                        {
+                            var viewModel = new EditPublicationViewModel(listHandler,collection.First());
+                            var window = new EditPublicationView { DataContext = viewModel };
+                            window.Show();
+                        }
                     },
                     p => true)
                     );
             }
         }
-
-        private ICommand FilterResults;
-        public ICommand c_FilterResults //wywołanie przy edycji paska wyszukiwania
-        {
-            get
-            {
-                return FilterResults ?? (FilterResults = new RelayCommand(
-                    (p) =>
-                    {
-                        listHandler.Filter(p_searchBar);
-                    },
-                    p => true)
-                    );
-            }
-        }
-
 
         #endregion
 
-        #region Properties Main
+        #region Properties
+
+        private ObservableCollection<PublicationListItem> pozycje;
+        public ObservableCollection<PublicationListItem> Pozycje
+        {
+            get { return pozycje; }
+            private set
+            {
+                pozycje = value;
+            }
+        }
 
         private string searchBar;
         public string p_searchBar

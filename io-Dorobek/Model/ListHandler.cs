@@ -35,7 +35,7 @@ namespace io_Dorobek.Model
             }
         }
 
-        public void Update()
+        private void Update()
         {
             var repo = new PublicationRepo();
             publications.Clear();
@@ -48,7 +48,7 @@ namespace io_Dorobek.Model
 
         public void RemoveElements(List<PublicationListItem> items)
         {
-            var repo = new PublicationRepo();//
+            var repo = new PublicationRepo();
             repo.deleteById(items.Select(p => p.Id).ToList());
             Update();
         }
@@ -64,5 +64,11 @@ namespace io_Dorobek.Model
             Update();
         }
 
+        public void EditElement(PublicationListItem item)
+        {
+            var repo = new PublicationRepo();
+            repo.EditItem(item);
+            Update();
+        }
     }
 }

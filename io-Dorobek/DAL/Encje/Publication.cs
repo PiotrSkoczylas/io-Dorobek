@@ -17,7 +17,12 @@ namespace io_Dorobek.DAL.Encje
         public string Title { get; set; }
         public string Author { get; set; }
         public int Year { get; set; }
+        public string FullDate { get; set; }
         public string Doi { get; set; }
+        public string Issn { get; set; }
+        public string Isbn { get; set; }
+        public string ArticleName { get; set; }
+        public string KeyWords { get; set; }
         public byte[]  PdfFile { get; set; }
     }
 }

@@ -9,16 +9,17 @@ namespace io_Dorobek.Model
 {
     public static class FileContentParser
     {
-        public static PublicationListItem GetDocumentInfo(PdfDocument pdf) //not finished
+        public static List<PublicationListItem> GetDocumentInfo(PdfDocument pdf) //not finished
         {
+            List<PublicationListItem> result=new List<PublicationListItem>();
             var metadata = MetadataExtract(pdf);
             if(metadata!=null)
             {
-                return metadata;
+                result.Add(metadata);
             }
             //add content parser result
             //var dataFromContent = ContentParserInfoExtract(pdf);
-            return null;
+            return result;
         }
 
         private static PublicationListItem MetadataExtract(PdfDocument pdf) //not finished
@@ -31,7 +32,9 @@ namespace io_Dorobek.Model
                 {
                     Title = pdf.Info.Title,
                     Author = pdf.Info.Author,
-                    Year = pdf.Info.CreationDate.Year
+                    Year = pdf.Info.CreationDate.Year,
+                    FullDate = pdf.Info.CreationDate.ToString(),
+                    KeyWords = pdf.Info.Keywords
                 };
                 return result;
             }

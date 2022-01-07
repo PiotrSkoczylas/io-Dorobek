@@ -43,6 +43,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -74,49 +75,57 @@
                  x:Name="W2_publicationDate"
                  Text="{Binding W2_PublicationDate, Mode=TwoWay}"
                  />
-
+        
         <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="Rok publikacji:"/>
+
+        <TextBox Grid.Row="3" Grid.Column="1"
+                 x:Name="W2_publicationYear"
+                 Text="{Binding W2_PublicationYear, Mode=TwoWay}"
+                 />
+
+        <TextBlock Grid.Row="4" Grid.Column="0"
                    Text="DOI:"
                    />
 
-        <TextBox Grid.Row="3" Grid.Column="1"
+        <TextBox Grid.Row="4" Grid.Column="1"
                  x:Name="W2_DOI"
                  Text="{Binding W2_DOI_VM, Mode=TwoWay}"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0"
+        <TextBlock Grid.Row="5" Grid.Column="0"
                    Text="ISBN dzieła lub dzieła nadrzędnego:"/>
 
-        <TextBox Grid.Row="4" Grid.Column="1"
+        <TextBox Grid.Row="5" Grid.Column="1"
                  x:Name="W2_isbnOfPaper"
                  Text="{Binding W2_IsbnOfPaper, Mode=TwoWay}"/>
 
-        <TextBlock Grid.Row="5" Grid.Column="0"
+        <TextBlock Grid.Row="6" Grid.Column="0"
                    Text="ISSN dzieła lub dzieła nadrzędnego:"/>
 
-        <TextBox Grid.Row="5" Grid.Column="1"
+        <TextBox Grid.Row="6" Grid.Column="1"
                  x:Name="W2_issnOfPaper"
                  Text="{Binding W2_IssnOfPaper, Mode=TwoWay}"/>
 
-        <TextBlock Grid.Row="6" Grid.Column="0"
+        <TextBlock Grid.Row="7" Grid.Column="0"
                    Text="Dzieło nadrzędne:"/>
 
-        <TextBox Grid.Row="6" Grid.Column="1"
+        <TextBox Grid.Row="7" Grid.Column="1"
                  x:Name="W2_articleName"
                  Text="{Binding W2_ArticleName, Mode=TwoWay}"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="0"
+        <TextBlock Grid.Row="8" Grid.Column="0"
                    Text="Hasła kluczowe/słowa przedmiotowe:"/>
 
-        <TextBox Grid.Row="7" Grid.Column="1"
+        <TextBox Grid.Row="8" Grid.Column="1"
                  x:Name="W2_keyWords"
                  Text="{Binding W2_KeyWords, Mode=TwoWay}"/>
 
-        <Button Grid.Row="8" Grid.Column="0"
+        <Button Grid.Row="9" Grid.Column="0"
                     x:Name="W2_button1"
                     Content="Edytuj"
                     Command="{Binding c_EditItem}"/>
 
-        <Button Grid.Row="8" Grid.Column="1"
+        <Button Grid.Row="9" Grid.Column="1"
                     x:Name="W2_button2"
                     Content="Anuluj"/>
             <!--Command="{Binding W2_Anuluj}"/>-->

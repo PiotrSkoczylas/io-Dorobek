@@ -41,12 +41,13 @@ namespace io_Dorobek.ViewModel
         {
             listHandler = lst;
             publicationListItem = item;
-            W2_PublicationDate = item.Year.ToString();
+            W2_PublicationYear = item.Year.ToString();
+            W2_PublicationDate = item.FullDate;
             W2_Title = item.Title;
-            W2_KeyWords = "";
-            W2_IssnOfPaper = "";
-            W2_IsbnOfPaper = "";
-            W2_ArticleName = "";
+            W2_KeyWords = item.KeyWords;
+            W2_IssnOfPaper = item.Issn;
+            W2_IsbnOfPaper = item.Isbn;
+            W2_ArticleName = item.ArticleName;
             W2_Author = item.Author;
             W2_DOI_VM = item.Doi;
         }
@@ -67,7 +68,12 @@ namespace io_Dorobek.ViewModel
                             publicationListItem.Doi = W2_DOI_VM.Trim();
                             publicationListItem.Title = W2_Title.Trim();
                             publicationListItem.Author = W2_Author.Trim();
-                            publicationListItem.Year = int.Parse(W2_PublicationDate.Trim());
+                            publicationListItem.Year = int.Parse(W2_PublicationYear.Trim());
+                            publicationListItem.FullDate = W2_PublicationDate.Trim();
+                            publicationListItem.KeyWords = W2_KeyWords.Trim();
+                            publicationListItem.Isbn = W2_IsbnOfPaper.Trim();
+                            publicationListItem.Issn = W2_IssnOfPaper.Trim();
+                            publicationListItem.ArticleName = W2_ArticleName.Trim();
                             listHandler.EditElement(publicationListItem);
                         }
                         catch (Exception ex)
@@ -114,6 +120,17 @@ namespace io_Dorobek.ViewModel
             {
                 w2_PublicationDate = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W2_PublicationDate)));
+            }
+        }
+
+        private string w2_PublicationYear;
+        public string W2_PublicationYear
+        {
+            get { return w2_PublicationYear; }
+            set
+            {
+                w2_PublicationDate = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W2_PublicationYear)));
             }
         }
 

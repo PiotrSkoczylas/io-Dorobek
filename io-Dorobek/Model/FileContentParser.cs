@@ -58,7 +58,10 @@ namespace io_Dorobek.Model
                 {
                     //string stderr = process.StandardError.ReadToEnd();
                     string result_string = reader.ReadToEnd();
-                    System.Windows.MessageBox.Show(result_string);
+                    result_string = result_string.Substring(1, result_string.Length - 1);
+                    result_string = result_string.Substring(0, result_string.Length - 1).Replace("\r","");
+                    result_string = result_string.Substring(0, result_string.Length - 1).Replace("'", "");
+                    //System.Windows.MessageBox.Show(result_string);
                     try
                     {
                         //JsonConvert.DeserializeObject<List<JsonDataModel>>(result_string);

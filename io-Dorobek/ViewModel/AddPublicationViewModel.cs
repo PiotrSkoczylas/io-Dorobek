@@ -112,7 +112,8 @@ namespace io_Dorobek.ViewModel
                 W1_Title = fileInfo.Titles[0];
                 foreach (var x in fileInfo.Titles)
                 {
-                    Titles.Add(x);
+                    if (x.Trim() != string.Empty)
+                        Titles.Add(x);
                 }
             }
             if (fileInfo.Authors.Count() != 0)
@@ -120,7 +121,8 @@ namespace io_Dorobek.ViewModel
                 W1_Author = fileInfo.Authors[0];
                 foreach (var x in fileInfo.Authors)
                 {
-                    Authors.Add(x);
+                    if (x.Trim() != string.Empty)
+                        Authors.Add(x);
                 }
             }
             if (fileInfo.Years.Count() != 0)
@@ -128,7 +130,8 @@ namespace io_Dorobek.ViewModel
                 W1_PublicationYear = fileInfo.Years[0].ToString();
                 foreach (var x in fileInfo.Years)
                 {
-                    PublicationYears.Add(x.ToString());
+                    if (x.ToString().Trim() != string.Empty)
+                        PublicationYears.Add(x.ToString());
                 }
             }
             if (fileInfo.Keywords.Count() != 0)
@@ -136,7 +139,8 @@ namespace io_Dorobek.ViewModel
                 W1_KeyWords = fileInfo.Keywords[0];
                 foreach (var x in fileInfo.Keywords)
                 {
-                    KeyWords.Add(x);
+                    if (x.Trim() != string.Empty)
+                        KeyWords.Add(x);
                 }
             }
             if (fileInfo.Doi.Count() != 0)
@@ -144,7 +148,8 @@ namespace io_Dorobek.ViewModel
                 W1_DOI_VM = fileInfo.Doi[0];
                 foreach (var x in fileInfo.Doi)
                 {
-                    Dois.Add(x);
+                    if (x.Trim() != string.Empty)
+                        Dois.Add(x);
                 }
             }
             if (fileInfo.FullDate.Count() != 0)
@@ -152,7 +157,8 @@ namespace io_Dorobek.ViewModel
                 W1_PublicationDate = fileInfo.FullDate[0];
                 foreach (var x in fileInfo.FullDate)
                 {
-                    PublicationDates.Add(x);
+                    if (x.Trim() != string.Empty)
+                        PublicationDates.Add(x);
                 }
             }
         }

@@ -36,7 +36,7 @@ namespace io_Dorobek.Model
 
         public void AppendFromJsonDataModel(JsonDataModel jsonDataModel)
         {
-            foreach(var x in jsonDataModel.titles)
+            foreach(var x in jsonDataModel.title)
             {
                 Titles.Add(x);
             }

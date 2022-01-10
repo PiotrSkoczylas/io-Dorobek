@@ -33,5 +33,49 @@ namespace io_Dorobek.Model
             ArticleName = src.ArticleName;
             KeyWords = src.KeyWords;
         }
+        public string GenerateBibTeX()
+        {
+            string result = $"@misc{{";
+            if(Author!="" && Author!=null)
+            {
+                result = $"{result}\n\tauthor =\"{Author}\",";
+            }
+            if(Title!= "" && Title != null)
+            {
+                result = $"{result}\n\ttitle=\"{Title}\",";
+            }
+            if(Year != 0)
+            {
+                result = $"{result}\n\tyear={Year},";
+            }
+            if(FullDate!= "" && FullDate != null)
+            {
+                result = $"{result}\n\tfull_date=\"{FullDate}\",";
+            }
+            if (Doi != "" && Doi != null)
+            {
+                result = $"{result}\n\tdoi=\"{Doi}\",";
+            }
+            if (Issn != "" && Issn != null)
+            {
+                result = $"{result}\n\tissn=\"{Issn}\",";
+            }
+            if (Isbn != "" && Isbn != null)
+            {
+                result = $"{result}\n\tisbn=\"{Isbn}\",";
+            }
+            if (ArticleName != "" && ArticleName != null)
+            {
+                result = $"{result}\n\tarticle=\"{ArticleName}\",";
+            }
+            if (KeyWords != "" && KeyWords != null)
+            {
+                result = $"{result}\n\tkeywords=\"{KeyWords}\",";
+            }
+            result = result.Substring(0, result.Length - 1);
+            result = $"{result}\n}}";
+
+            return result;
+        }
     }
 }

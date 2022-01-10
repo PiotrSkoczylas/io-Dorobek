@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace io_Dorobek.ViewModel
@@ -55,6 +58,37 @@ namespace io_Dorobek.ViewModel
 
         #region Commands
 
+        private ICommand PreviewPdf;
+        public ICommand c_PreviewPdf
+        {
+            get
+            {
+                return PreviewPdf ?? (PreviewPdf = new RelayCommand(
+                    (p) =>
+                    {
+                        string path = FsHandler.CreateForPreview(publicationListItem.Id);
+                        Process.Start(path);
+                    },
+                    p => true)
+                    );
+            }
+        }
+
+        private ICommand Close;
+        public ICommand c_Close
+        {
+            get
+            {
+                return Close ?? (Close = new RelayCommand(
+                    (p) =>
+                    {
+                        ((Window)p).Close();
+                    },
+                    p => true)
+                    );
+            }
+        }
+
         private ICommand EditItem;
         public ICommand c_EditItem
         {
@@ -75,6 +109,7 @@ namespace io_Dorobek.ViewModel
                             publicationListItem.Issn = W2_IssnOfPaper.Trim();
                             publicationListItem.ArticleName = W2_ArticleName.Trim();
                             listHandler.EditElement(publicationListItem);
+                            ((Window)p).Close();
                         }
                         catch (Exception ex)
                         {
@@ -129,7 +164,7 @@ namespace io_Dorobek.ViewModel
             get { return w2_PublicationYear; }
             set
             {
-                w2_PublicationDate = value;
+                w2_PublicationYear = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W2_PublicationYear)));
             }
         }

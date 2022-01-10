@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="Edytuj pozycję" Height="450" Width="600"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        x:Name="Edit_Window">
 
 
     <Window.Resources>
@@ -121,13 +122,26 @@
                  Text="{Binding W2_KeyWords, Mode=TwoWay}"/>
 
         <Button Grid.Row="9" Grid.Column="0"
+                    x:Name="Preview_Button"
+                    Content="Podgląd"
+                    Command="{Binding c_PreviewPdf}"
+                    />
+        <Grid Grid.Row="9" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="0"
                     x:Name="W2_button1"
                     Content="Edytuj"
-                    Command="{Binding c_EditItem}"/>
-
-        <Button Grid.Row="9" Grid.Column="1"
+                    Command="{Binding c_EditItem}"
+                    CommandParameter="{Binding ElementName=Edit_Window}"/>
+            <Button Grid.Row="0" Grid.Column="1"
                     x:Name="W2_button2"
-                    Content="Anuluj"/>
+                    Content="Anuluj"
+                    Command="{Binding c_Close}"
+                    CommandParameter="{Binding ElementName=Edit_Window}"/>
+        </Grid>
             <!--Command="{Binding W2_Anuluj}"/>-->
         
     </Grid>

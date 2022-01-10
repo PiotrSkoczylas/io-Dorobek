@@ -58,22 +58,25 @@ namespace io_Dorobek.Model
                 {
                     //string stderr = process.StandardError.ReadToEnd();
                     string result_string = reader.ReadToEnd();
-                    result_string = result_string.Substring(1, result_string.Length - 1);
-                    result_string = result_string.Substring(0, result_string.Length - 1).Replace("\r","");
-                    result_string = result_string.Substring(0, result_string.Length - 1).Replace("'", "");
-                    //System.Windows.MessageBox.Show(result_string);
-                    try
+                    if(result_string.Length>0)
                     {
-                        //JsonConvert.DeserializeObject<List<JsonDataModel>>(result_string);
-                        var tmp = JsonConvert.DeserializeObject<JsonDataModel>(result_string);
-                        if(tmp!=null)
+                        result_string = result_string.Substring(1, result_string.Length - 1);
+                        result_string = result_string.Substring(0, result_string.Length - 1).Replace("\r", "");
+                        result_string = result_string.Substring(0, result_string.Length - 1).Replace("'", "");
+                        //System.Windows.MessageBox.Show(result_string);
+                        try
                         {
-                            result = tmp;
+                            //JsonConvert.DeserializeObject<List<JsonDataModel>>(result_string);
+                            var tmp = JsonConvert.DeserializeObject<JsonDataModel>(result_string);
+                            if (tmp != null)
+                            {
+                                result = tmp;
+                            }
                         }
-                    }
-                    catch(Exception ex)
-                    {
+                        catch (Exception ex)
+                        {
 
+                        }
                     }
                     //System.Windows.MessageBox.Show(stderr); //for debugging only
                 }

@@ -25,7 +25,17 @@ namespace io_Dorobek.ViewModel
             }
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                if (_predicate != null) CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                if (_predicate != null) CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public bool CanExecute(object parameter)
         {

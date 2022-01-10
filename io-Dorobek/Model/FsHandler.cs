@@ -30,16 +30,29 @@ namespace io_Dorobek.Model
             }
         }
 
+        static public string CreateForPreview(int id)
+        {
+            var repo = new PublicationRepo();
+            var a = repo.getPdf(id);
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp.pdf");
+            a.Item1.Save(path);
+            return path;
+        }
+
         static public void SaveToBibtex(List<PublicationListItem> items, string path)
         {
             var repo = new PublicationRepo();
             string x = "";
             foreach(var item in items)
             {
-                if(x.Length > 0)
-                    x = $"{x},\n@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
+                if (x.Length > 0)
+                    x = $"{x},\n{item.GenerateBibTeX()}";
                 else
-                    x = $"@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}";
+                    x = item.GenerateBibTeX();
+                //if(x.Length > 0)
+                //    x = $"{x},\n@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
+                //else
+                //    x = $"@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}";
             }
             File.WriteAllText(path, x);
         }

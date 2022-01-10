@@ -9,7 +9,8 @@
         mc:Ignorable="d"
         Title="Dodaj pozycję" Height="450" Width="600"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        x:Name="Add_Window">
 
     <Window.Resources>
         <Style TargetType="Button">
@@ -24,15 +25,15 @@
             <Setter Property="Padding"  Value="20"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="TextWrapping" Value="Wrap"/> 
+            <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         </Style>
-       
+
     </Window.Resources>
-    
-   
+
+
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -46,7 +47,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
@@ -62,7 +63,12 @@
         <TextBlock Grid.Row="0" Grid.Column="1"
                    Text="{Binding WybranaŚcieżka}"
                    />
-        
+
+        <Button Grid.Row="0" Grid.Column="2"
+                    x:Name="Preview_Button"
+                    Content="Podgląd"
+                    Command="{Binding c_PreviewPdf}" Width="Auto"
+                />
 
         <TextBlock Grid.Row="1" Grid.Column="0"
                    Text="Tytuł:"/>
@@ -95,7 +101,7 @@
                 </interactivity:EventTrigger>
             </interactivity:Interaction.Triggers>
         </ComboBox>
-        
+
         <TextBlock Grid.Row="3" Grid.Column="0"
                    Text="Data publikacji:"/>
 
@@ -207,12 +213,14 @@
         <Button Grid.Row="10" Grid.Column="0"
                     x:Name="W1_button2"
                     Content="Dodaj"
-                    Command="{Binding c_AddPublicationToDb}"/>
+                    Command="{Binding c_AddPublicationToDb}"
+                    CommandParameter="{Binding ElementName=Add_Window}"/>
 
         <Button Grid.Row="10" Grid.Column="1"
                     x:Name="W1_button3"
-                    Content="Anuluj"/>
-            <!--Command="{Binding W1_Anuluj}"/>-->
-        
+                    Content="Anuluj"
+                    Command="{Binding c_Close}"
+                    CommandParameter="{Binding ElementName=Add_Window}"/>
+
     </Grid>
 </Window>

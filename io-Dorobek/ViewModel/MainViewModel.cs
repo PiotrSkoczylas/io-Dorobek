@@ -108,7 +108,7 @@ namespace io_Dorobek.ViewModel
                     {
                         using(SaveFileDialog x = new SaveFileDialog())
                         {
-                            x.Filter = "bibtex file (*.bibtex)|*.bibtex";
+                            x.Filter = "bibtex file (*.bib)|*.bib";
                             if (x.ShowDialog() == DialogResult.OK)
                             {
                                 System.Collections.IList items = (System.Collections.IList)p;

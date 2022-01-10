@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -191,6 +193,7 @@ namespace io_Dorobek.ViewModel
                                     Year = int.Parse(W1_PublicationYear.Trim())
                                 };
                                 listHandler.AddElement(doc, item);
+                                ((Window)p).Close();
                             }
                         }
                         catch (Exception ex)
@@ -228,6 +231,35 @@ namespace io_Dorobek.ViewModel
             }
         }
 
+        private ICommand PreviewPdf;
+        public ICommand c_PreviewPdf
+        {
+            get
+            {
+                return PreviewPdf ?? (PreviewPdf = new RelayCommand(
+                    (p) =>
+                    {
+                        Process.Start(WybranaŚcieżka);
+                    },
+                    p => WybranaŚcieżka != "")
+                    );
+            }
+        }
+
+        private ICommand Close;
+        public ICommand c_Close
+        {
+            get
+            {
+                return Close ?? (Close = new RelayCommand(
+                    (p) =>
+                    {
+                        ((Window)p).Close();
+                    },
+                    p => true)
+                    );
+            }
+        }
 
         #endregion
 
@@ -486,7 +518,7 @@ namespace io_Dorobek.ViewModel
         public string WybranaŚcieżka
         {
             get { return wybranaŚcieżka; }
-            private set
+            set
             {
                 wybranaŚcieżka = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WybranaŚcieżka)));

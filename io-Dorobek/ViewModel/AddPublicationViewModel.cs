@@ -107,17 +107,53 @@ namespace io_Dorobek.ViewModel
         {
             var fileInfo = FileContentParser.GetDocumentInfo(FsHandler.FileLoader(WybranaŚcieżka));
             ClearComboboxes();
-            if (fileInfo != null && fileInfo.Count()!=0)
+            if (fileInfo.Titles.Count() != 0)
             {
-                W1_Title = fileInfo[0].Title;
-                W1_Author = fileInfo[0].Author;
-                W1_PublicationDate = fileInfo[0].Year.ToString();
+                W1_Title = fileInfo.Titles[0];
+                foreach (var x in fileInfo.Titles)
+                {
+                    Titles.Add(x);
+                }
             }
-            foreach(var x in fileInfo)
+            if (fileInfo.Authors.Count() != 0)
             {
-                Authors.Add(x.Author);
-                Titles.Add(x.Title);
-                PublicationDates.Add(x.Year.ToString());
+                W1_Author = fileInfo.Authors[0];
+                foreach (var x in fileInfo.Authors)
+                {
+                    Authors.Add(x);
+                }
+            }
+            if (fileInfo.Years.Count() != 0)
+            {
+                W1_PublicationYear = fileInfo.Years[0].ToString();
+                foreach (var x in fileInfo.Years)
+                {
+                    PublicationYears.Add(x.ToString());
+                }
+            }
+            if (fileInfo.Keywords.Count() != 0)
+            {
+                W1_KeyWords = fileInfo.Keywords[0];
+                foreach (var x in fileInfo.Keywords)
+                {
+                    KeyWords.Add(x);
+                }
+            }
+            if (fileInfo.Doi.Count() != 0)
+            {
+                W1_DOI_VM = fileInfo.Doi[0];
+                foreach (var x in fileInfo.Doi)
+                {
+                    Dois.Add(x);
+                }
+            }
+            if (fileInfo.FullDate.Count() != 0)
+            {
+                W1_PublicationDate = fileInfo.FullDate[0];
+                foreach (var x in fileInfo.FullDate)
+                {
+                    PublicationDates.Add(x);
+                }
             }
         }
         #endregion
@@ -490,7 +526,7 @@ namespace io_Dorobek.ViewModel
             get { return w1_PublicationYear; }
             set
             {
-                w1_PublicationDate = value;
+                w1_PublicationYear = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W1_PublicationYear)));
             }
         }

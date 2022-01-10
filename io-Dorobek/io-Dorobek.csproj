@@ -218,6 +218,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ExtractedDataModel.cs" />
+    <Compile Include="Model\JsonDataModel.cs" />
     <Compile Include="ViewModel\AddPublicationViewModel.cs" />
     <Compile Include="ViewModel\EditPublicationViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -283,7 +285,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Model\read_pdf_data.py" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="View\lupa.png" />
   </ItemGroup>

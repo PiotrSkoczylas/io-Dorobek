@@ -202,7 +202,7 @@
                  x:Name="W1_keyWords"
                  Text="{Binding W1_KeyWords, Mode=TwoWay}"/>
         <ComboBox Grid.Row="9" Grid.Column="2" x:Name="KeywordsCombo"
-                  ItemsSource="{Binding IssnOfPaper, Mode=OneWay}">
+                  ItemsSource="{Binding KeyWords, Mode=OneWay}">
             <interactivity:Interaction.Triggers>
                 <interactivity:EventTrigger EventName="SelectionChanged">
                     <interactivity:InvokeCommandAction Command="{Binding c_KeywordsSelection}" CommandParameter="{Binding ElementName=KeywordsCombo, Path=SelectedItem}"/>

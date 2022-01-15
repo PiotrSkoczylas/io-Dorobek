@@ -39,6 +39,7 @@ namespace io_Dorobek.Model
         {
             var repo = new PublicationRepo();
             publications.Clear();
+            unfiltered.Clear();
             foreach (var y in repo.getAll())
             {
                 publications.Add(new PublicationListItem(y));

@@ -99,21 +99,30 @@ namespace io_Dorobek.ViewModel
                     {
                         try
                         {
-                            publicationListItem.Doi = W2_DOI_VM.Trim();
-                            publicationListItem.Title = W2_Title.Trim();
-                            publicationListItem.Author = W2_Author.Trim();
-                            publicationListItem.Year = int.Parse(W2_PublicationYear.Trim());
-                            publicationListItem.FullDate = W2_PublicationDate.Trim();
-                            publicationListItem.KeyWords = W2_KeyWords.Trim();
-                            publicationListItem.Isbn = W2_IsbnOfPaper.Trim();
-                            publicationListItem.Issn = W2_IssnOfPaper.Trim();
-                            publicationListItem.ArticleName = W2_ArticleName.Trim();
+                            if(W2_DOI_VM!=null)
+                                publicationListItem.Doi = W2_DOI_VM.Trim();
+                            if (W2_Title != null)
+                                publicationListItem.Title = W2_Title.Trim();
+                            if (W2_Author != null)
+                                publicationListItem.Author = W2_Author.Trim();
+                            if (W2_PublicationYear != null)
+                                publicationListItem.Year = int.Parse(W2_PublicationYear.Trim());
+                            if (W2_PublicationDate != null)
+                                publicationListItem.FullDate = W2_PublicationDate.Trim();
+                            if (W2_KeyWords != null)
+                                publicationListItem.KeyWords = W2_KeyWords.Trim();
+                            if (W2_IsbnOfPaper != null)
+                                publicationListItem.Isbn = W2_IsbnOfPaper.Trim();
+                            if (W2_IssnOfPaper != null)
+                                publicationListItem.Issn = W2_IssnOfPaper.Trim();
+                            if (W2_ArticleName != null)
+                                publicationListItem.ArticleName = W2_ArticleName.Trim();
                             listHandler.EditElement(publicationListItem);
                             ((Window)p).Close();
                         }
                         catch (Exception ex)
                         {
-
+                            MessageBox.Show(ex.Message);
                         }
                     },
                     p => true)

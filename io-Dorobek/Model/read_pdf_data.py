@@ -184,6 +184,8 @@ def wyszukiwanie_tytulu(tekst):  # text podzielony na wyrazy
             elif len(wyraz) <= 3 or wyraz in ['about', 'under', 'below', 'from', 'with', 'without', 'within', 'between',
                                               'wohin', 'woher', 'nach', 'oder', 'über',
                                               'obok', 'przy', 'stąd', 'dotąd', 'dokąd', ]:
+                i += 1
+            else:
                 i = 0
 
             if wyraz in Wyszukiwanie_autorow(linia).split():

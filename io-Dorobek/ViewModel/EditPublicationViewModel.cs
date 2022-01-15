@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace io_Dorobek.ViewModel
@@ -55,6 +58,37 @@ namespace io_Dorobek.ViewModel
 
         #region Commands
 
+        private ICommand PreviewPdf;
+        public ICommand c_PreviewPdf
+        {
+            get
+            {
+                return PreviewPdf ?? (PreviewPdf = new RelayCommand(
+                    (p) =>
+                    {
+                        string path = FsHandler.CreateForPreview(publicationListItem.Id);
+                        Process.Start(path);
+                    },
+                    p => true)
+                    );
+            }
+        }
+
+        private ICommand Close;
+        public ICommand c_Close
+        {
+            get
+            {
+                return Close ?? (Close = new RelayCommand(
+                    (p) =>
+                    {
+                        ((Window)p).Close();
+                    },
+                    p => true)
+                    );
+            }
+        }
+
         private ICommand EditItem;
         public ICommand c_EditItem
         {
@@ -65,20 +99,30 @@ namespace io_Dorobek.ViewModel
                     {
                         try
                         {
-                            publicationListItem.Doi = W2_DOI_VM.Trim();
-                            publicationListItem.Title = W2_Title.Trim();
-                            publicationListItem.Author = W2_Author.Trim();
-                            publicationListItem.Year = int.Parse(W2_PublicationYear.Trim());
-                            publicationListItem.FullDate = W2_PublicationDate.Trim();
-                            publicationListItem.KeyWords = W2_KeyWords.Trim();
-                            publicationListItem.Isbn = W2_IsbnOfPaper.Trim();
-                            publicationListItem.Issn = W2_IssnOfPaper.Trim();
-                            publicationListItem.ArticleName = W2_ArticleName.Trim();
+                            if(W2_DOI_VM!=null)
+                                publicationListItem.Doi = W2_DOI_VM.Trim();
+                            if (W2_Title != null)
+                                publicationListItem.Title = W2_Title.Trim();
+                            if (W2_Author != null)
+                                publicationListItem.Author = W2_Author.Trim();
+                            if (W2_PublicationYear != null)
+                                publicationListItem.Year = int.Parse(W2_PublicationYear.Trim());
+                            if (W2_PublicationDate != null)
+                                publicationListItem.FullDate = W2_PublicationDate.Trim();
+                            if (W2_KeyWords != null)
+                                publicationListItem.KeyWords = W2_KeyWords.Trim();
+                            if (W2_IsbnOfPaper != null)
+                                publicationListItem.Isbn = W2_IsbnOfPaper.Trim();
+                            if (W2_IssnOfPaper != null)
+                                publicationListItem.Issn = W2_IssnOfPaper.Trim();
+                            if (W2_ArticleName != null)
+                                publicationListItem.ArticleName = W2_ArticleName.Trim();
                             listHandler.EditElement(publicationListItem);
+                            ((Window)p).Close();
                         }
                         catch (Exception ex)
                         {
-
+                            MessageBox.Show(ex.Message);
                         }
                     },
                     p => true)
@@ -129,7 +173,7 @@ namespace io_Dorobek.ViewModel
             get { return w2_PublicationYear; }
             set
             {
-                w2_PublicationDate = value;
+                w2_PublicationYear = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(W2_PublicationYear)));
             }
         }

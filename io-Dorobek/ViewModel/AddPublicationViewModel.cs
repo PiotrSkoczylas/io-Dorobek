@@ -106,7 +106,12 @@ namespace io_Dorobek.ViewModel
         {
             PdfDocument pdfDocument = FsHandler.FileLoader(WybranaŚcieżka);
             ClearComboboxes();
-            if (pdfDocument == null) return;
+            if (pdfDocument == null)
+            {
+                WybranaŚcieżka = string.Empty;
+                System.Windows.MessageBox.Show("Nie można odczytać pliku");
+                return;
+            }
             var fileInfo = FileContentParser.GetDocumentInfo(pdfDocument);
             if (fileInfo.Titles.Count() != 0)
             {

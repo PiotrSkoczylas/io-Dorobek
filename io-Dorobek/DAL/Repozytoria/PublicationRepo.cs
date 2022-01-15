@@ -40,7 +40,12 @@ namespace io_Dorobek.DAL.Repozytoria
                     Author = item.Author,
                     Year = item.Year,
                     Doi = item.Doi,
-                    PdfFile = pdf
+                    PdfFile = pdf,
+                    ArticleName = item.ArticleName,
+                    FullDate = item.FullDate,
+                    Isbn = item.Isbn,
+                    Issn = item.Issn,
+                    KeyWords = item.KeyWords
                 });
                 database.SaveChanges();
             }
@@ -70,8 +75,13 @@ namespace io_Dorobek.DAL.Repozytoria
                 {
                     selected.Title = item.Title;
                     selected.Author = item.Author;
-                    selected.Doi = item.Doi;
                     selected.Year = item.Year;
+                    selected.Doi = item.Doi;
+                    selected.ArticleName = item.ArticleName;
+                    selected.FullDate = item.FullDate;
+                    selected.Isbn = item.Isbn;
+                    selected.Issn = item.Issn;
+                    selected.KeyWords = item.KeyWords;
                     database.Publications.Update(selected);
                     database.SaveChanges();
                 }

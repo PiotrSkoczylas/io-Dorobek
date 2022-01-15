@@ -114,7 +114,7 @@
                 <DataGridTextColumn Header="Autorzy"
                                     Width="8*"
                                     Binding="{Binding Author}" />
-                <DataGridTextColumn Header="Data publikacji"
+                <DataGridTextColumn Header="Rok publikacji"
                                     Width="4*"
                                     Binding="{Binding Year}"/>
                 <DataGridTextColumn Header="DOI" 

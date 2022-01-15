@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace io_Dorobek.DAL.Encje
 {
@@ -23,6 +17,6 @@ namespace io_Dorobek.DAL.Encje
         public string Isbn { get; set; }
         public string ArticleName { get; set; }
         public string KeyWords { get; set; }
-        public byte[]  PdfFile { get; set; }
+        public byte[] PdfFile { get; set; }
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using io_Dorobek.DAL.Repozytoria;
+﻿using io_Dorobek.DAL.Repozytoria;
 using PdfSharp.Pdf;
-using System.IO;
 using PdfSharp.Pdf.IO;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace io_Dorobek.Model
 {
@@ -47,7 +44,7 @@ namespace io_Dorobek.Model
         {
             var repo = new PublicationRepo();
             string x = "";
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 if (x.Length > 0)
                     x = $"{x},\n{item.GenerateBibTeX()}";

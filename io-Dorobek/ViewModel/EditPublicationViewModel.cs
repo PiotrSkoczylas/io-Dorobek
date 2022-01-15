@@ -1,12 +1,7 @@
 ﻿using io_Dorobek.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -99,7 +94,7 @@ namespace io_Dorobek.ViewModel
                     {
                         try
                         {
-                            if(W2_DOI_VM!=null)
+                            if (W2_DOI_VM != null)
                                 publicationListItem.Doi = W2_DOI_VM.Trim();
                             if (W2_Title != null)
                                 publicationListItem.Title = W2_Title.Trim();

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace io_Dorobek.ViewModel
@@ -14,7 +10,7 @@ namespace io_Dorobek.ViewModel
 
         public RelayCommand(Action<object> action, Predicate<object> predicate)
         {
-            if(action == null)
+            if (action == null)
             {
                 throw new ArgumentNullException($"No argument {nameof(action)}");
             }
@@ -39,7 +35,7 @@ namespace io_Dorobek.ViewModel
 
         public bool CanExecute(object parameter)
         {
-            if(_predicate==null)
+            if (_predicate == null)
             {
                 return true;
             }

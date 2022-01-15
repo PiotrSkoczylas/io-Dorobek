@@ -1,9 +1,5 @@
 ﻿using PdfSharp.Pdf;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace io_Dorobek.Model
 {
@@ -36,19 +32,19 @@ namespace io_Dorobek.Model
 
         public void AppendFromJsonDataModel(JsonDataModel jsonDataModel)
         {
-            foreach(var x in jsonDataModel.title)
+            foreach (var x in jsonDataModel.title)
             {
                 Titles.Add(x);
             }
-            if(jsonDataModel.authors != string.Empty)
+            if (jsonDataModel.authors != string.Empty)
             {
                 Authors.Add(jsonDataModel.authors);
             }
-            foreach(var x in jsonDataModel.doi)
+            foreach (var x in jsonDataModel.doi)
             {
                 Doi.Add(x);
             }
-            foreach(var x in jsonDataModel.keywords)
+            foreach (var x in jsonDataModel.keywords)
             {
                 Keywords.Add(x);
             }

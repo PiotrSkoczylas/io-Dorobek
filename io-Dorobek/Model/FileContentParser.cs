@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PdfSharp.Pdf;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace io_Dorobek.Model
 {
@@ -13,9 +9,9 @@ namespace io_Dorobek.Model
     {
         public static ExtractedDataModel GetDocumentInfo(PdfDocument pdf)
         {
-            ExtractedDataModel result=new ExtractedDataModel();
+            ExtractedDataModel result = new ExtractedDataModel();
             var metadata = MetadataExtract(pdf);
-            if(metadata!=null)
+            if (metadata != null)
             {
                 result.AppendFromDocumentInformation(metadata);
             }
@@ -25,7 +21,7 @@ namespace io_Dorobek.Model
 
         private static PdfDocumentInformation MetadataExtract(PdfDocument pdf)
         {
-            if(pdf.Info.Title==null)
+            if (pdf.Info.Title == null)
                 return null;
             return pdf.Info;
         }
@@ -41,13 +37,13 @@ namespace io_Dorobek.Model
             start.RedirectStandardError = true;
             start.CreateNoWindow = true;
             start.LoadUserProfile = true;
-            using(var process = System.Diagnostics.Process.Start(start))
+            using (var process = System.Diagnostics.Process.Start(start))
             {
-                using(StreamReader reader = process.StandardOutput)
+                using (StreamReader reader = process.StandardOutput)
                 {
                     //string stderr = process.StandardError.ReadToEnd();
                     string result_string = reader.ReadToEnd();
-                    if(result_string.Length>0)
+                    if (result_string.Length > 0)
                     {
                         result_string = result_string.Substring(1, result_string.Length - 1);
                         result_string = result_string.Substring(0, result_string.Length - 1).Replace("\r", "");

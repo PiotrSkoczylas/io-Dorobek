@@ -1,14 +1,11 @@
 ﻿using io_Dorobek.DAL.Encje;
+using io_Dorobek.Model;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
-using System.Collections.ObjectModel;
-using io_Dorobek.Model;
 
 namespace io_Dorobek.DAL.Repozytoria
 {
@@ -27,7 +24,7 @@ namespace io_Dorobek.DAL.Repozytoria
             using (var database = new DB())
             {
                 var items = database.Publications.Where(x => Id.Contains(x.Id)).ToList();
-                foreach(var item in items)
+                foreach (var item in items)
                     database.Publications.Remove(item);
                 database.SaveChanges();
             }
@@ -35,7 +32,7 @@ namespace io_Dorobek.DAL.Repozytoria
 
         public void addPublication(byte[] pdf, PublicationListItem item)
         {
-            using(var database = new DB())
+            using (var database = new DB())
             {
                 database.Publications.Add(new Publication()
                 {
@@ -49,16 +46,16 @@ namespace io_Dorobek.DAL.Repozytoria
             }
         }
 
-        public (PdfDocument,string) getPdf(int Id)
+        public (PdfDocument, string) getPdf(int Id)
         {
             using (var database = new DB())
             {
                 var item = database.Publications.Where(x => x.Id == Id).FirstOrDefault();
-                if(null != item)
+                if (null != item)
                 {
                     MemoryStream stream = new MemoryStream(item.PdfFile);
                     PdfDocument document = PdfReader.Open(stream);
-                    return (document,$"{item.Author}_{item.Title}.pdf");
+                    return (document, $"{item.Author}_{item.Title}.pdf");
                 }
                 throw new Exception("Nie udało się pobrać pliku z bazy danych.");
             }
@@ -68,7 +65,7 @@ namespace io_Dorobek.DAL.Repozytoria
         {
             using (var database = new DB())
             {
-                var selected = database.Publications.Where(x=>x.Id==item.Id).FirstOrDefault();
+                var selected = database.Publications.Where(x => x.Id == item.Id).FirstOrDefault();
                 if (selected != null)
                 {
                     selected.Title = item.Title;

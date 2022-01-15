@@ -1,16 +1,8 @@
-﻿using io_Dorobek.DAL.Repozytoria;
-using io_Dorobek.Model;
+﻿using io_Dorobek.Model;
 using io_Dorobek.View;
-using PdfSharp.Pdf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -94,7 +86,7 @@ namespace io_Dorobek.ViewModel
                 return SaveBibtex ?? (SaveBibtex = new RelayCommand(
                     (p) =>
                     {
-                        using(SaveFileDialog x = new SaveFileDialog())
+                        using (SaveFileDialog x = new SaveFileDialog())
                         {
                             x.Filter = "bibtex file (*.bib)|*.bib";
                             if (x.ShowDialog() == DialogResult.OK)
@@ -136,9 +128,9 @@ namespace io_Dorobek.ViewModel
                     {
                         System.Collections.IList items = (System.Collections.IList)p;
                         var collection = items.Cast<PublicationListItem>().ToList();
-                        if(collection.Count == 1)
+                        if (collection.Count == 1)
                         {
-                            var viewModel = new EditPublicationViewModel(listHandler,collection.First());
+                            var viewModel = new EditPublicationViewModel(listHandler, collection.First());
                             var window = new EditPublicationView { DataContext = viewModel };
                             window.Show();
                         }

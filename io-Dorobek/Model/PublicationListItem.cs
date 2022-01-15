@@ -1,9 +1,4 @@
 ﻿using io_Dorobek.DAL.Encje;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace io_Dorobek.Model
 {
@@ -19,7 +14,7 @@ namespace io_Dorobek.Model
         public string Isbn { get; set; }
         public string ArticleName { get; set; }
         public string KeyWords { get; set; }
-        public PublicationListItem() {}
+        public PublicationListItem() { }
         public PublicationListItem(Publication src)
         {
             Id = src.Id;
@@ -36,19 +31,19 @@ namespace io_Dorobek.Model
         public string GenerateBibTeX()
         {
             string result = $"@misc{{";
-            if(Author!="" && Author!=null)
+            if (Author != "" && Author != null)
             {
                 result = $"{result}\n\tauthor =\"{Author}\",";
             }
-            if(Title!= "" && Title != null)
+            if (Title != "" && Title != null)
             {
                 result = $"{result}\n\ttitle=\"{Title}\",";
             }
-            if(Year != 0)
+            if (Year != 0)
             {
                 result = $"{result}\n\tyear={Year},";
             }
-            if(FullDate!= "" && FullDate != null)
+            if (FullDate != "" && FullDate != null)
             {
                 result = $"{result}\n\tfull_date=\"{FullDate}\",";
             }

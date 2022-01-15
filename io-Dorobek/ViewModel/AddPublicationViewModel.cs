@@ -1,13 +1,10 @@
 ﻿using io_Dorobek.Model;
 using PdfSharp.Pdf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -275,9 +272,9 @@ namespace io_Dorobek.ViewModel
                 return TitleSelection ?? (TitleSelection = new RelayCommand(
                     (p) =>
                     {
-                        if(p != null)
+                        if (p != null)
                         {
-                            W1_Title=p.ToString();
+                            W1_Title = p.ToString();
                         }
                     },
                     p => true)

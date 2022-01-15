@@ -12,9 +12,9 @@ using io_Dorobek.Model;
 
 namespace io_Dorobek.DAL.Repozytoria
 {
-    internal class PublicationRepo //rozwazyc statyczna - pozbyc sie ponawiania polaczenia z baza - przechowywac polaczenie
+    internal class PublicationRepo
     {
-        public List<Publication> getAll()//Do zmiany na PublicationListItem
+        public List<Publication> getAll()
         {
             using (var database = new DB())
             {
@@ -39,7 +39,6 @@ namespace io_Dorobek.DAL.Repozytoria
             {
                 database.Publications.Add(new Publication()
                 {
-                    //Id = item.Id,
                     Title = item.Title,
                     Author = item.Author,
                     Year = item.Year,
@@ -50,7 +49,7 @@ namespace io_Dorobek.DAL.Repozytoria
             }
         }
 
-        public (PdfDocument,string) getPdf(int Id) //rozwazyc liste w wyniku -> zasypywanie bazy zapytaniami przy zapisie wielu -> modyfikacja w fshandlerze
+        public (PdfDocument,string) getPdf(int Id)
         {
             using (var database = new DB())
             {
@@ -59,7 +58,7 @@ namespace io_Dorobek.DAL.Repozytoria
                 {
                     MemoryStream stream = new MemoryStream(item.PdfFile);
                     PdfDocument document = PdfReader.Open(stream);
-                    return (document,$"{item.Author.ToUpper()}_{item.Title.ToUpper()}.pdf");//sprawdzic poprawnosc formatowania - czy zgodna z trescia zadania
+                    return (document,$"{item.Author}_{item.Title}.pdf");
                 }
                 throw new Exception("Nie udało się pobrać pliku z bazy danych.");
             }

@@ -107,8 +107,10 @@ namespace io_Dorobek.ViewModel
 
         private void FetchW1FieldsFromFile()
         {
-            var fileInfo = FileContentParser.GetDocumentInfo(FsHandler.FileLoader(WybranaŚcieżka));
+            PdfDocument pdfDocument = FsHandler.FileLoader(WybranaŚcieżka);
             ClearComboboxes();
+            if (pdfDocument == null) return;
+            var fileInfo = FileContentParser.GetDocumentInfo(pdfDocument);
             if (fileInfo.Titles.Count() != 0)
             {
                 W1_Title = fileInfo.Titles[0];

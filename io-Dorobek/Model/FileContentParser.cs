@@ -11,7 +11,7 @@ namespace io_Dorobek.Model
 {
     public static class FileContentParser
     {
-        public static ExtractedDataModel GetDocumentInfo(PdfDocument pdf) //not finished
+        public static ExtractedDataModel GetDocumentInfo(PdfDocument pdf)
         {
             ExtractedDataModel result=new ExtractedDataModel();
             var metadata = MetadataExtract(pdf);
@@ -23,22 +23,11 @@ namespace io_Dorobek.Model
             return result;
         }
 
-        private static PdfDocumentInformation MetadataExtract(PdfDocument pdf) //not finished
+        private static PdfDocumentInformation MetadataExtract(PdfDocument pdf)
         {
             if(pdf.Info.Title==null)
                 return null;
-            //else
-           // {
-                //PublicationListItem result = new PublicationListItem()
-                //{
-                //    Title = pdf.Info.Title,
-                //    Author = pdf.Info.Author,
-                //    Year = pdf.Info.CreationDate.Year,
-                //    FullDate = pdf.Info.CreationDate.ToString(),
-                //    KeyWords = pdf.Info.Keywords
-                //};
             return pdf.Info;
-            //}
         }
 
         private static JsonDataModel ContentParserInfoExtract(PdfDocument pdf)

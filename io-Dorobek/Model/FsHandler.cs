@@ -14,10 +14,14 @@ namespace io_Dorobek.Model
     {
         static public PdfDocument FileLoader(string path)
         {
-            PdfDocument pdfDocument = PdfReader.Open(path);
-            if (pdfDocument == null)
-                throw new Exception("Nie udało się otworzyć pliku");
-            return pdfDocument;
+            if (PdfReader.TestPdfFile(path) != 0)
+            {
+                PdfDocument pdfDocument = PdfReader.Open(path);
+                if (pdfDocument == null)
+                    throw new Exception("Nie udało się otworzyć pliku");
+                return pdfDocument;
+            }
+            return null;
         }
 
         static public void SavePdfFiles(List<int> idList, string path)
@@ -49,10 +53,6 @@ namespace io_Dorobek.Model
                     x = $"{x},\n{item.GenerateBibTeX()}";
                 else
                     x = item.GenerateBibTeX();
-                //if(x.Length > 0)
-                //    x = $"{x},\n@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}\n";
-                //else
-                //    x = $"@misc{{\n\tauthor=\"{item.Author}\",\n\ttitle=\"{item.Title}\",\n\tyear={item.Year},\n\tdoi=\"{item.Doi}\"\n}}";
             }
             File.WriteAllText(path, x);
         }

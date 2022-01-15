@@ -39,18 +39,6 @@ namespace io_Dorobek.ViewModel
         }
 
 
-        //Lista rzeczy do wyswietlenia w Combobox w okienku głównym aplikacji
-        private List<string> path_of_combobox = new List<string>();
-        public List<string> Path_of_combobox
-        {
-            get { return path_of_combobox; }
-            private set
-            {
-                for (int i = 0; i < value.Count(); i++)
-                { path_of_combobox[i] = value[i]; }
-            }
-        }
-
         #region Commands
 
         private ICommand DeleteItems;
@@ -181,7 +169,7 @@ namespace io_Dorobek.ViewModel
             set
             {
                 searchBar = value;
-                listHandler.Filter(searchBar);//tymczasowo tutaj
+                listHandler.Filter(searchBar);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(p_searchBar)));
             }
         }

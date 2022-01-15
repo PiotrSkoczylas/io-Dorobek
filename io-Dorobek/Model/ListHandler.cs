@@ -16,7 +16,6 @@ namespace io_Dorobek.Model
         private ObservableCollection<PublicationListItem> unfiltered { get; set; }
         public ListHandler()
         {
-            //var repo = new PublicationRepo();//rozwazyc przerobienie klasy na statyczna
             publications = new ObservableCollection<PublicationListItem>();
             unfiltered = new ObservableCollection<PublicationListItem>();
             Update();

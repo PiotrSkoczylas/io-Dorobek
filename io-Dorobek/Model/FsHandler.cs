@@ -53,5 +53,21 @@ namespace io_Dorobek.Model
             }
             File.WriteAllText(path, x);
         }
+
+        public static List<List<string>> OpenBibTex(string fileName)
+        {
+            var result = new List<List<string>>();
+            var file = File.ReadAllText(fileName);
+            foreach(var entry in file.Split('}'))
+            {
+                var lst = new List<string>();
+                foreach (var item in entry.Split('\n'))
+                {
+                    lst.Add(item.Trim());
+                }
+                result.Add(lst);
+            }
+            return result;
+        }
     }
 }

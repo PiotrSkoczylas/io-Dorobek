@@ -53,13 +53,23 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
         <Button Grid.Row="0" Grid.Column="0"
                     x:Name="W1_button1"
                     Content="Przeglądaj"
                     Command="{Binding c_BrowseForPdf}"
                 />
-
+        <Button Grid.Row="0" Grid.Column="1"
+                    x:Name="W1_importBtn"
+                    Content="Import BibTeX"
+                    Command="{Binding c_ImportBibTeX}"
+                />
+        </Grid>
         <TextBlock Grid.Row="0" Grid.Column="1"
                    Text="{Binding WybranaŚcieżka}"
                    />

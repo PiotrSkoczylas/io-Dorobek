@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PdfSharp.Pdf;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace io_Dorobek.Model
@@ -64,6 +65,19 @@ namespace io_Dorobek.Model
                         }
                     }
                     //System.Windows.MessageBox.Show(stderr); //for debugging only
+                }
+            }
+            return result;
+        }
+
+        public static ExtractedDataModel DataFromBibTeX(List<List<string>> lst)
+        {
+            var result = new ExtractedDataModel();
+            foreach (var entry in lst)
+            {
+                foreach (var item in entry)
+                {
+                    result.AppendFromBibTeXLine(item);
                 }
             }
             return result;

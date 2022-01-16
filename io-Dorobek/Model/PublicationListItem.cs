@@ -33,7 +33,7 @@ namespace io_Dorobek.Model
             string result = $"@misc{{";
             if (Author != "" && Author != null)
             {
-                result = $"{result}\n\tauthor =\"{Author}\",";
+                result = $"{result}\n\tauthor=\"{Author}\",";
             }
             if (Title != "" && Title != null)
             {
@@ -41,7 +41,7 @@ namespace io_Dorobek.Model
             }
             if (Year != 0)
             {
-                result = $"{result}\n\tyear={Year},";
+                result = $"{result}\n\tyear=\"{Year}\",";
             }
             if (FullDate != "" && FullDate != null)
             {

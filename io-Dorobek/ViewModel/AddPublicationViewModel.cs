@@ -1,9 +1,11 @@
 ﻿using io_Dorobek.Model;
 using PdfSharp.Pdf;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -102,17 +104,8 @@ namespace io_Dorobek.ViewModel
             InsertDefaultsToComboboxes();
         }
 
-        private void FetchW1FieldsFromFile()
+        private void FillFieldsWithExtractedData(ExtractedDataModel fileInfo)
         {
-            PdfDocument pdfDocument = FsHandler.FileLoader(WybranaŚcieżka);
-            ClearComboboxes();
-            if (pdfDocument == null)
-            {
-                WybranaŚcieżka = string.Empty;
-                System.Windows.MessageBox.Show("Nie można odczytać pliku");
-                return;
-            }
-            var fileInfo = FileContentParser.GetDocumentInfo(pdfDocument);
             if (fileInfo.Titles.Count() != 0)
             {
                 W1_Title = fileInfo.Titles[0];
@@ -167,10 +160,83 @@ namespace io_Dorobek.ViewModel
                         PublicationDates.Add(x);
                 }
             }
+            if (fileInfo.Isbn.Count() != 0)
+            {
+                W1_IsbnOfPaper = fileInfo.Isbn[0];
+                foreach (var x in fileInfo.Isbn)
+                {
+                    if (x.Trim() != string.Empty)
+                        IsbnOfPaper.Add(x);
+                }
+            }
+            if (fileInfo.Issn.Count() != 0)
+            {
+                W1_IssnOfPaper = fileInfo.Issn[0];
+                foreach (var x in fileInfo.Issn)
+                {
+                    if (x.Trim() != string.Empty)
+                        IssnOfPaper.Add(x);
+                }
+            }
+            if (fileInfo.Article.Count() != 0)
+            {
+                W1_ArticleName = fileInfo.Article[0];
+                foreach (var x in fileInfo.Article)
+                {
+                    if (x.Trim() != string.Empty)
+                        ArticleNames.Add(x);
+                }
+            }
+        }
+
+        private void FetchW1FieldsFromLists(List<List<string>> fileData)
+        {
+            var fileInfo = FileContentParser.DataFromBibTeX(fileData);
+            FillFieldsWithExtractedData(fileInfo);
+        }
+
+        private void FetchW1FieldsFromFile()
+        {
+            PdfDocument pdfDocument = FsHandler.FileLoader(WybranaŚcieżka);
+            ClearComboboxes();
+            if (pdfDocument == null)
+            {
+                WybranaŚcieżka = string.Empty;
+                System.Windows.MessageBox.Show("Nie można odczytać pliku");
+                return;
+            }
+            var fileInfo = FileContentParser.GetDocumentInfo(pdfDocument);
+            FillFieldsWithExtractedData(fileInfo);
         }
         #endregion
 
         #region Commands
+
+        private ICommand ImportBibTeX;
+        public ICommand c_ImportBibTeX
+        {
+            get
+            {
+                return ImportBibTeX ?? (ImportBibTeX = new RelayCommand(
+                    (p) =>
+                    {
+                        using (var x = new OpenFileDialog())
+                        {
+                            x.Filter = "BibTeX file (*.bib)|*.bib";
+                            x.Title = "Select BibTeX file";
+                            if (x.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(x.FileName))
+                            {
+                                var fileData = FsHandler.OpenBibTex(x.FileName);
+                                FetchW1FieldsFromLists(fileData);
+                                //FetchW1FieldsFromFile();
+                            }
+                        }
+                    },
+                    p => true)
+                    );
+            }
+        }
+
         private ICommand AddPublicationToDb;
         public ICommand c_AddPublicationToDb
         {

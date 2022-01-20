@@ -20,11 +20,10 @@ namespace io_Dorobek.Model
 
         public void Filter(string text)
         {
-            var repo = new PublicationRepo();
             publications.Clear();
             foreach (var y in unfiltered)
             {
-                if (y.Title.ToUpper().Contains(text.ToUpper()) || y.Author.ToUpper().Contains(text.ToUpper()))
+                if (y.Title.ToUpper().Contains(text.ToUpper()) || y.Author.ToUpper().Contains(text.ToUpper()) || y.KeyWords.ToUpper().Contains(text.ToUpper()))
                 {
                     publications.Add(y);
                 }
